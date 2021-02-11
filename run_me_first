@@ -1,0 +1,6 @@
+#!/bin/bash
+mkdir -p ~/envs
+virtualenv ~/envs/${PWD##*/}
+source ~/envs/${PWD##*/}/bin/activate
+pip install -r requirements.txt
+
