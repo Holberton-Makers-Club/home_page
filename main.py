@@ -1,11 +1,13 @@
 """
 ENTRY POINT
 """
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, url_for
 from flask_cors import (CORS, cross_origin)
 from os import environ
 from uuid import uuid4
 from api import *
+from routes import *
+from helpers import build_url
 
 
 app = Flask(__name__)
@@ -16,11 +18,10 @@ else:
 CORS(app, resources={r"*": {"origins": "*"}})
 
 
+# blueprints
+app.register_blueprint(api_v1)
+app.register_blueprint(landing)
 
-
-@app.route('/', methods=['GET'], strict_slashes=False)
-def index():
-    return render_template('index.html')
 
 
 
