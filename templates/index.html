@@ -8,17 +8,51 @@
   <meta name="author" content="Holberton Makers Club">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
   <meta name="viewport" content="width=device-width" initial-scale=1.0">
-  <meta charset="UTF-8">
+
+  <!-- bootstrap stuff and scripts -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 </head>
 
 <body>
-  <header>
-    <h1>Holberton Makers Club</h1>
+  <header class="bg-primary w-100 pb-2 py-2 mb-2">
+      <div id="logo"></div>
   </header>
 
-  {{ projects }}
+  <main>
+    <!-- search bar -->
+    <form class="form-inline" action="/search" method="POST">
+      <label class="sr-only" for="searchBar">Search by project name</label>
+      <input type="text" class="form-control mb-2 mr-sm-2" id="searchBar" placeholder="Search for project">
+      <button type="submit" class="btn btn-primary mb-2">Search</button>
+    </form>
 
+    <!-- projects section -->    
+    <section id="projects">
+      {% if projects %}
+        {% for project in projects %}
+          <div class="card">
+            <div class="card-body">
+            <h4 class="card-title">{{ project.name }}</h4>
+            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+            <p class="card-text">
+            {{ project.description }}
+            </p>
+            <a href="#!" class="card-link">Card link</a>
+            <a href="#!" class="card-link">Another link</a>
+            </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+    </section>
+
+  </main>
+
+  <footer class="bg-primary w-100 pb-2 py-2 mb-2">
+  </footer>
 </body>
 </html>
