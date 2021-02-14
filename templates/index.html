@@ -6,7 +6,6 @@
 
   <title>Holberton Makers Club</title>
   <meta name="author" content="Holberton Makers Club">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
   <meta name="viewport" content="width=device-width" initial-scale=1.0">
 
   <!-- bootstrap stuff and scripts -->
@@ -15,44 +14,94 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
 
 </head>
 
 <body>
-  <header class="bg-primary w-100 pb-2 py-2 mb-2">
+  <header class="bg-holb-red w-100 pb-2 py-2 mb-2">
       <div id="logo"></div>
   </header>
 
-  <main>
-    <!-- search bar -->
-    <form class="form-inline" action="/search" method="POST">
-      <label class="sr-only" for="searchBar">Search by project name</label>
-      <input type="text" class="form-control mb-2 mr-sm-2" id="searchBar" placeholder="Search for project">
-      <button type="submit" class="btn btn-primary mb-2">Search</button>
-    </form>
+  <main class="container">
 
     <!-- projects section -->    
-    <section id="projects">
-      {% if projects %}
-        {% for project in projects %}
-          <div class="card">
-            <div class="card-body">
-            <h4 class="card-title">{{ project.name }}</h4>
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-            <p class="card-text">
-            {{ project.description }}
-            </p>
-            <a href="#!" class="card-link">Card link</a>
-            <a href="#!" class="card-link">Another link</a>
+    <section class="mb-3 container justify-content-center"  id="projects">
+        <div class="d-flex flex-column w-100 my-0 align-items-center">
+            <!-- search bar -->
+            <div class="mx-auto col-12 col-md-8 my-2 py-0" style="padding-left:0!important; padding-right:0!important;">
+                <form class="form-inline" action="/search" method="POST">
+                    <label class="sr-only" for="searchBar">Search by project name</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2 col-12 col-md-6" id="searchBar" placeholder="Search for project">
+                    <button type="submit" class="btn btn-primary mb-2 col-12 col-md-auto">Search</button>
+                </form>
+            </div>
+            
+            <div class="card col-12 col-md-8 px-0 mx-auto my-2">
+                <div class="card-body">
+                    <a href="#"><h4 class="card-title">Project Name</h4></a>
+                    <p class="card-text text-wrap">
+                        Project description blah blah blah blah blah blah blah blah blahblah blah blah blah blah blah blah blah blahblah blah blah blah blah blah blah blah blahblah blah blah blah blah blah blah blah blahblah blah blah blah blah blah blah blah blah
+                    </p>
+                    <h4 class="card-subtitle">Contributors</h4>
+                    <ul>
+                        <li>Athena</li>
+                        <li>495</li>
+                        <li>Travis</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card col-12 col-md-8 px-0 mx-auto my-2">
+                <div class="card-body">
+                    <a href="#"><h4 class="card-title">Project Name</h4></a>
+                    <p class="card-text">
+                        Project description blah blah blah blah blah blah blah blah blah
+                    </p>
+                    <h4 class="card-subtitle">Contributors</h4>
+                    <ul>
+                        <li>Athena</li>
+                        <li>495</li>
+                        <li>Travis</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card col-12 col-md-8 px-0 mx-auto my-2">
+                <div class="card-body">
+                    <a href="#"><h4 class="card-title">Project Name</h4></a>
+                    <p class="card-text">
+                        Project description blah blah blah blah blah blah blah blah blah
+                    </p>
+                    <h4 class="card-subtitle">Contributors</h4>
+                    <ul>
+                        <li>Athena</li>
+                        <li>495</li>
+                        <li>Travis</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card col-12 col-md-8 px-0 mx-auto my-2">
+                <div class="card-body">
+                    <a href="#"><h4 class="card-title">Project Name</h4></a>
+                    <p class="card-text">
+                        Project description blah blah blah blah blah blah blah blah blah
+                    </p>
+                    <h4 class="card-subtitle">Contributors</h4>
+                    <ul>
+                        <li>Athena</li>
+                        <li>495</li>
+                        <li>Travis</li>
+                    </ul>
+                </div>
             </div>
         </div>
-        {% endfor %}
-      {% endif %}
+        
+
+        
     </section>
 
   </main>
 
-  <footer class="bg-primary w-100 pb-2 py-2 mb-2">
+  <footer class="bg-holb-red w-100 pb-2 py-2 fixed-bottom">
   </footer>
 </body>
 </html>
