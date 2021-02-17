@@ -29,4 +29,13 @@ def search():
                 if query == member.lower() or query in member.lower():
                     matches.append(project)
                     break
-    return render_template('index.html', projects=matches)
+            if project not in matches:
+                for tech in project.get('technologies'):
+                    if query == tech.lower() or query in tech.lower():
+                        matches.append(project)
+                        break
+    msg = None
+    if len(matches) == 0:
+        matches = projects
+        msg = f'{query} not found'
+    return render_template('index.html', projects=matches, msg=msg)
