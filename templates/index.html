@@ -44,14 +44,29 @@
                 <div class="card-body">
                     <a href="{{ project.link }}"><h3 class="card-title">{{ project.name }}</h3></a>
                     <p class="card-text text-wrap">
+                        {% if project.description %}
                         {{ project.description }}
+                        {% endif %}
                     </p>
-                    <h5 class="card-subtitle">Contributors</h5>
-                    <ul>
-                        {% for member in project.members %}
-                        <li>{{ member }}</li>
-                        {% endfor %}
-                    </ul>
+                    <div class="d-flex flex-wrap">
+                        <ul>
+                            {% if project.members %}
+                            <h5 class="card-subtitle">Contributors</h5>
+                            {% for member in project.members %}
+                            <li>{{ member }}</li>
+                            {% endfor %}
+                            {% endif%}
+                        </ul>
+                        <ul>
+                            {% if project.technologies %}
+                            <h5 class="card-subtitle">Tech Stack</h5>
+                            {% for tech in project.technologies %}
+                            <li>{{ tech }}</li>
+                            {% endfor %}
+                            {% endif%}
+                        </ul>
+                    </div>
+
                 </div>
             </div>
 
