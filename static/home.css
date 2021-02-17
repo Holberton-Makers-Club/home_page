@@ -1,8 +1,11 @@
-#logo-container {
-    padding-left: 1.5rem;
-}
 #logo {
-    max-height: 5rem;
+    margin-left: 1.5rem;
+    margin-top: 0.5rem;
+    height: 5rem;
+    width: auto;
+    background-image: url('https://storage.googleapis.com/home-page-static-images/makers_text_logo.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 .btn-primary {
     background-color: #be0037;
@@ -14,4 +17,13 @@
 }
 .card-title {
     color: #be0037;
+}
+
+@media only screen and (max-width: 768px) {
+
+  #logo {
+    margin-right: 1.5rem;
+    background-image: url('https://storage.googleapis.com/home-page-static-images/makers_icon_logo.svg');
+    background-position-x: right;
+  }
 }
