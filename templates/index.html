@@ -20,7 +20,7 @@
 
 <body>
   <header class="bg-holb-red w-100 pb-2 py-2 mb-2">
-      <div id="logo"></div>
+      <a href="https://www.holbertonmakers.club" id="logo-container"><img id="logo" src="https://storage.googleapis.com/home-page-static-images/makers_text_logo.svg"></a>
   </header>
 
   <main class="container">
@@ -32,67 +32,34 @@
             <div class="mx-auto col-12 col-md-8 my-2 py-0" style="padding-left:0!important; padding-right:0!important;">
                 <form class="form-inline" action="/search" method="POST">
                     <label class="sr-only" for="searchBar">Search by project name</label>
-                    <input type="text" class="form-control mb-2 mr-sm-2 col-12 col-md-6" id="searchBar" placeholder="Search for project">
+                    <input type="text" class="form-control mb-2 mr-sm-2 col-12 col-md-6" id="searchBar" name="searchBar" placeholder="Search for project">
                     <button type="submit" class="btn btn-primary mb-2 col-12 col-md-auto">Search</button>
                 </form>
             </div>
             
+            {% if projects %}
+            {% for project in projects %}
+
             <div class="card col-12 col-md-8 px-0 mx-auto my-2">
                 <div class="card-body">
-                    <a href="#"><h4 class="card-title">Project Name</h4></a>
+                    <a href="{{ project.link }}"><h3 class="card-title">{{ project.name }}</h3></a>
                     <p class="card-text text-wrap">
-                        Project description blah blah blah blah blah blah blah blah blahblah blah blah blah blah blah blah blah blahblah blah blah blah blah blah blah blah blahblah blah blah blah blah blah blah blah blahblah blah blah blah blah blah blah blah blah
+                        {{ project.description }}
                     </p>
-                    <h4 class="card-subtitle">Contributors</h4>
+                    <h5 class="card-subtitle">Contributors</h5>
                     <ul>
-                        <li>Athena</li>
-                        <li>495</li>
-                        <li>Travis</li>
+                        {% for member in project.members %}
+                        <li>{{ member }}</li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
-            <div class="card col-12 col-md-8 px-0 mx-auto my-2">
-                <div class="card-body">
-                    <a href="#"><h4 class="card-title">Project Name</h4></a>
-                    <p class="card-text">
-                        Project description blah blah blah blah blah blah blah blah blah
-                    </p>
-                    <h4 class="card-subtitle">Contributors</h4>
-                    <ul>
-                        <li>Athena</li>
-                        <li>495</li>
-                        <li>Travis</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card col-12 col-md-8 px-0 mx-auto my-2">
-                <div class="card-body">
-                    <a href="#"><h4 class="card-title">Project Name</h4></a>
-                    <p class="card-text">
-                        Project description blah blah blah blah blah blah blah blah blah
-                    </p>
-                    <h4 class="card-subtitle">Contributors</h4>
-                    <ul>
-                        <li>Athena</li>
-                        <li>495</li>
-                        <li>Travis</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card col-12 col-md-8 px-0 mx-auto my-2">
-                <div class="card-body">
-                    <a href="#"><h4 class="card-title">Project Name</h4></a>
-                    <p class="card-text">
-                        Project description blah blah blah blah blah blah blah blah blah
-                    </p>
-                    <h4 class="card-subtitle">Contributors</h4>
-                    <ul>
-                        <li>Athena</li>
-                        <li>495</li>
-                        <li>Travis</li>
-                    </ul>
-                </div>
-            </div>
+
+            {% endfor %}
+            {% endif %}
+            
+            
+            
         </div>
         
 
