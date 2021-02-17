@@ -9,3 +9,6 @@ class FirestoreClient():
         self.db = firestore.Client()
     def get_all_by_class(self, classname: str):
         return [ref.to_dict() for ref in self.db.collection(classname).get()]
+
+    def connected(self):
+        return True if self.db else False
