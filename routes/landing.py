@@ -24,7 +24,9 @@ def search():
         if query == project.get('name').lower() or query in project.get('name').lower():
             matches.append(project)
             continue
-        for member in project.get('members'):
-            if query == member.lower() or query in member.lower():
-                matches.append(project)
+        if project not in matches:
+            for member in project.get('members'):
+                if query == member.lower() or query in member.lower():
+                    matches.append(project)
+                    break
     return render_template('index.html', projects=matches)
