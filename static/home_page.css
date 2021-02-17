@@ -18,6 +18,9 @@
 .card-title {
     color: #be0037;
 }
+.btn-alert {
+    color: #be0037;
+}
 
 @media only screen and (max-width: 768px) {
 

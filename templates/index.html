@@ -14,13 +14,13 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='home_page.css') }}">
 
 </head>
 
 <body>
   <header id="header" class="bg-holb-red w-100 pb-2 py-2 mb-2">
-      <a href="https://www.holbertonmakers.club" id="logo-container"><div id="logo"></a>
+      <a href="https://www.holbertonmakers.club" id="logo-container"><div id="logo"></div></a>
   </header>
 
   <main class="container">
@@ -32,10 +32,13 @@
             <div class="mx-auto col-12 col-md-8 my-2 py-0" style="padding-left:0!important; padding-right:0!important;">
                 <form class="form-inline" action="/search" method="POST">
                     <label class="sr-only" for="searchBar">Search by project name</label>
-                    <input type="text" class="form-control mb-2 mr-sm-2 col-12 col-md-6" id="searchBar" name="searchBar" placeholder="Search for project">
+                    <input type="text" class="form-control mb-2 mr-sm-2 col-12 col-md-6" id="searchBar" name="searchBar" placeholder="Search">
                     <button type="submit" class="btn btn-primary mb-2 col-12 col-md-auto">Search</button>
                 </form>
             </div>
+            {% if msg %}
+            <span class="btn-alert">{{ msg }}</span>
+            {% endif %}
             
             {% if projects %}
             {% for project in projects %}
