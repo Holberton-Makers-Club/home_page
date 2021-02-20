@@ -44,7 +44,7 @@
 * search for matches in appropriate fields, all if no filter is provided
 * <b>returns:</b> redirect to landing page with jinja data for projects found
 
-## <b>GET</b> /members/<id>
+## <b>GET</b> /members/\<id>
 ### user navigates to an individual member profile page
 * retrieve data with GET /api/members/<id>
 * <b>returns:</b> a template with user name, role they're seeking, links to their github & linkedIn, as well as project cards for those they contributed to. Project cards include the role they held during that sprint.
