@@ -10,6 +10,64 @@
 
 {% block content %}
 
-    Profile page
+            
+<div class="d-flex flex-column w-100 my-0 align-items-center">  
+    <!-- Member Profile -->
+    <div>
+        <h1>Talisha White</h1>
+        <h6 class="card-subtitle mb-2 text-muted">CEO, Fetxh</h6>
+        <p class="card-text">
+            I am all about this and this and this.
+        </p>
+        <a href="#" class="">
+            <i class="fab fa-github"></i>
+        </a>
+        <a href="#" class="">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="">
+            <i class="fab fa-linkedin"></i>
+        </a>
+    </div>
+    
+    {% if projects %}
+    {% for project in projects %}
+    <div class="card col-12 col-md-8 px-0 mx-auto my-2">
+        <div class="card-body">
+            <a href="{{ project.link }}"><h3 class="card-title">{{ project.name }}</h3></a>
+            <h5>Talisha's Role: UI/UX Design</h5>
+            <p class="card-text text-wrap">
+                {% if project.description %}
+                {{ project.description }}
+                {% endif %}
+            </p>
+            <div class="d-flex flex-wrap">
+               <ul>
+                    {% if project.members %}
+                    <h5 class="card-subtitle">Contributors</h5>
+                    {% for member in project.members %}
+                    <a href="{% if member.profile_url %}{{ member.profile_url }}{% endif %}">
+                        <li>{{ member }}</li>
+                    </a>
+                    {% endfor %}
+                    {% endif%}
+                </ul>
+                <ul>
+                    {% if project.technologies %}
+                    <h5 class="card-subtitle">Tech Stack</h5>
+                    {% for tech in project.technologies %}
+                    <li>{{ tech }}</li>
+                    {% endfor %}
+                    {% endif%}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+            
+
+            {% endfor %}
+            {% endif %}
 
   {% endblock %}

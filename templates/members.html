@@ -9,6 +9,35 @@
 {% endblock %}
 
 {% block content %}
- meet the team
+<section class="container">
+    <div>
+        <h1 class="py-4">Members</h1>
+    </div>
+    <div class="card-columns">
+        <div class="card">
+            <div class="card-body">
+                <a href="{% if member %}{% if member.profile_url %}{{ member.profile_url }}{% endif %}{% endif %}">
+                    <h4 class="card-title">Talisha White</h4>
+                </a>
+                <h6 class="card-subtitle mb-2 text-muted">CEO, Fetxh</h6>
+                <p class="card-text">
+                I am all about this and this and this.
+                </p>
+                <a href="#" class="">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" class="">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+
+</section>
+    
 
   {% endblock %}

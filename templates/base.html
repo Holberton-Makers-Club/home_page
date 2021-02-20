@@ -14,25 +14,49 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/v4-shims.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='home_page.css') }}">
 {% endblock %}
 </head>
 
 <body>
-  <header id="header" class="bg-holb-red w-100 pb-2 py-2 mb-2">
-      <a href="https://www.holbertonmakers.club" id="logo-container"><div id="logo"></div></a>
-  </header>
+    <header id="header" class="">
+        <!-- Nav Bar -->
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-md navbar-light static-top">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.holbertonmakers.club">
+                    <img src="https://storage.googleapis.com/home-page-static-images/makers_text_logo.svg" alt="" height="80px">
+                    </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('landing.projects') }}">PROJECTS</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('landing.members') }}">MEMBERS</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-  <main class="container">
+    <main class="">
 
     
     {% block content %}
     {% endblock %}
 
-</main>
+    </main>
 
-  <footer class="bg-holb-red w-100 pb-2 py-2 fixed-bottom">
-  </footer>
+    <footer class="w-100 pb-2 py-2 fixed-bottom">
+    </footer>
 </body>
 </html>
