@@ -46,17 +46,36 @@
 
 ## <b>GET</b> /members/\<id>
 ### user navigates to an individual member profile page
-* retrieve data with GET /api/members/<id>
+* retrieve data with GET /api/members
 * <b>returns:</b> a template with user name, role they're seeking, links to their github & linkedIn, as well as project cards for those they contributed to. Project cards include the role they held during that sprint.
+* route file path/name: routes/landing.py
+* template file path/name: templates/profile.html
 
 ## <b>GET</b> /members
 ### user navigates to Members page from either About Us or Projects
 * retrieve data with GET /api/members
 * <b>returns:</b> a template with a list of member cards displaying their name, role they are seeking, and a prompt to view their profile ('see more' or something to that effect)
-
+* route file path/name: routes/landing.py
+* template file path/name: templates/members.html
 ---
 
 ## API ENDPOINTS
+
+## <b>GET</b> api/members
+### used to retrieve a jsonified representation of all members
+- gets all members from the firebaseClient using .get_all_by_class('members')
+- <b>returns:</b>
+    If members are found:
+        * jsonified dictionary with:
+            * 'status': 'OK'
+            * 'projects': list of dictionary representations of all members
+        * status code of 200
+    Otherwise:
+        * jsonified dictionary with:
+            * 'status': 'error'
+            * 'project': empty list
+        * status code of 400
+- route file path/name: api/v1/projects.py
 
 ## <b>GET</b> api/projects
 ### used to retrieve a jsonified representation of all projects
@@ -72,6 +91,7 @@
             * 'status': 'error'
             * 'project': empty list
         * status code of 400
+- route file path/name: api/v1/projects.py
 
 ## <b>GET</b> api/projects/name/<str: name>
 ### used to find a project with a given name
@@ -88,6 +108,7 @@
             * 'status': 'error'
             * 'project': empty dictionary
         * status code of 400
+- route file path/name: api/v1/projects.py
 
 ---
 
@@ -96,12 +117,13 @@
 ### FirestoreClient
 Handle connections to the firestore database
 * ### <b>attributes</b>
-    * db - firestore connection
+    * db - firestore connection (instance)
 * ### <b>methods</b>
-    * get_all_by_class - retrieve all objects of a given class name
+    * get_all_by_class - retrieve all objects of a given class name (instance)
         * <b>parameters:</b> 
             1. class_name - name of the class to retrieve
         * <b>returns:</b> a <u>list of dictionary representations</u> of all objects of class class_name
+- route file path/name: api/v1/firestore_client.py
 
 
 ---
@@ -112,3 +134,15 @@ Information related to each HMC project
     * description: string - description of the project
     * members: list[strings] - list of team member full names/contributors
     * link: string - url to project page, if one exists
+- route file path/name: api/v1/projects.py
+
+---
+### Members
+Members of HMC
+* ### <b>attributes</b>
+    * id: string - uuid
+    * name: string - full name
+    * github_link: string - url to their github
+    * linkedin: string - url to their linkedin
+    * twitter: string - url to their twitter
+- route file path/name: api/v1/members.py
