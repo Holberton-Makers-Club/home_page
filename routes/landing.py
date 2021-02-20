@@ -8,14 +8,39 @@ landing = Blueprint("landing", __name__, url_prefix="")
 
 @landing.route('/', methods=['GET'], strict_slashes=False)
 def index():
-    """ public landing page """
+    """ about us page """
+    return render_template('index.html')
+
+@landing.route('/projects', methods=['GET'], strict_slashes=False)
+def projects():
+    """ projects page """
     r = requests.get(build_url('api/projects')).json()
     projects = r.get('projects')
-    return render_template('index.html', projects=projects)
+    return render_template('projects.html', projects=projects)
 
+@landing.route('/members', methods=['GET'], strict_slashes=False)
+def members():
+    """ projects page """
+    members = {
+            'name': 'Some Name',
+            'github': 'www.github.com',
+            'linkedin': 'www.linkedin.com'
+        }
+    return render_template('members.html', members=members)
 
-@landing.route('/search', methods=['POST'], strict_slashes=False)
+@landing.route('/members/<id>', methods=['GET'], strict_slashes=False)
+def member_profile(id):
+    """ projects page """
+    member = {
+            'name': 'Some Name',
+            'github': 'www.github.com',
+            'linkedin': 'www.linkedin.com'
+        }
+    return render_template('profile.html', member=member)
+
+@landing.route('/projects/search', methods=['POST'], strict_slashes=False)
 def search():
+    ''' search projects '''
     query = str(request.form.get('searchBar')).lower()
     r = requests.get(build_url('api/projects')).json()
     projects = r.get('projects')
@@ -38,4 +63,4 @@ def search():
     if len(matches) == 0:
         matches = projects
         msg = f'{query} not found'
-    return render_template('index.html', projects=matches, msg=msg)
+    return render_template('projects.html', projects=matches, msg=msg)
