@@ -123,6 +123,7 @@ Handle connections to the firestore database
         * <b>parameters:</b> 
             1. class_name - name of the class to retrieve
         * <b>returns:</b> a <u>list of dictionary representations</u> of all objects of class class_name
+    * connected - <b>returns</b> true if database connection is working, else false
 - route file path/name: api/v1/firestore_client.py
 
 
