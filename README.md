@@ -132,7 +132,7 @@ Information related to each HMC project
 * ### <b>attributes</b>
     * name: string - title of the project
     * description: string - description of the project
-    * members: list[strings] - list of team member full names/contributors
+    * members: list[tuples(strings)] - list of tuples, each containing (member name, member role)
     * link: string - url to project page, if one exists
 - route file path/name: api/v1/projects.py
 
@@ -145,4 +145,5 @@ Members of HMC
     * github_link: string - url to their github
     * linkedin: string - url to their linkedin
     * twitter: string - url to their twitter
+    * seeking: string - the role they are seeking
 - route file path/name: api/v1/members.py
