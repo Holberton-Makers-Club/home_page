@@ -75,7 +75,7 @@
             * 'status': 'error'
             * 'members': empty list
         * status code of 400
-- route file path/name: api/v1/projects.py
+- route file path/name: api/v1/members.py
 
 ## <b>GET</b> api/projects
 ### used to retrieve a jsonified representation of all projects
