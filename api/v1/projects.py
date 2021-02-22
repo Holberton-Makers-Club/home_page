@@ -12,7 +12,7 @@ def all_projects():
         return jsonify({'Status': 'error', 'projects': []}), 400
     return jsonify({'Status': 'OK', 'projects': projects}), 200
 
-@api_v1.route('/projects/nam/<name>', methods=['GET'], strict_slashes=False)
+@api_v1.route('/projects/name/<name>', methods=['GET'], strict_slashes=False)
 def project_by_name(name):
     r = requests.get(build_url('api/projects')).json()
     if r.get('status') == 'error':
