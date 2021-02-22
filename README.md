@@ -68,12 +68,12 @@
     If members are found:
         * jsonified dictionary with:
             * 'status': 'OK'
-            * 'projects': list of dictionary representations of all members
+            * 'members': list of dictionary representations of all members
         * status code of 200
     Otherwise:
         * jsonified dictionary with:
             * 'status': 'error'
-            * 'project': empty list
+            * 'members': empty list
         * status code of 400
 - route file path/name: api/v1/projects.py
 
