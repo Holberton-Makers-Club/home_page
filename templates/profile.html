@@ -10,7 +10,15 @@
 
 {% block content %}
 
+{% if member %}
+
+{{member}}
+
+{% else %}
+
+<h3>Member not found</h3>
             
+{% endif %}
 <div class="d-flex flex-column w-100 my-0 align-items-center">  
     <!-- Member Profile -->
     <div>

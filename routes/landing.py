@@ -21,22 +21,20 @@ def projects():
 @landing.route('/members', methods=['GET'], strict_slashes=False)
 def members():
     """ projects page """
-    members = {
-            'name': 'Some Name',
-            'github': 'www.github.com',
-            'linkedin': 'www.linkedin.com'
-        }
+    r = requests.get(build_url('api/members')).json()
+    members = r.get('members')
     return render_template('members.html', members=members)
 
 @landing.route('/members/<id>', methods=['GET'], strict_slashes=False)
 def member_profile(id):
     """ projects page """
-    member = {
-            'name': 'Some Name',
-            'github': 'www.github.com',
-            'linkedin': 'www.linkedin.com'
-        }
-    return render_template('profile.html', member=member)
+    r = requests.get(build_url('api/members')).json()
+    members = r.get('members')
+    foundmember = None    
+    for member in members:
+        if id == member.get('id'):
+            foundmember = member
+    return render_template('profile.html', member=foundmember)
 
 @landing.route('/projects/search', methods=['POST'], strict_slashes=False)
 def search():
