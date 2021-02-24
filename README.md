@@ -160,4 +160,5 @@ Members of HMC
     * linkedin: string - url
     * projects: list of strings of project ids
     * title: string - whatever title they want to give themselves
+    * tech: list of strings of tech ids they've worked with before
 - route file path/name: models/members.py
