@@ -124,7 +124,7 @@ Handle connections to the firestore database
             1. class_name - name of the class to retrieve
         * <b>returns:</b> a <u>list of dictionary representations</u> of all objects of class class_name
     * connected - <b>returns</b> true if database connection is working, else false
-- route file path/name: api/v1/firestore_client.py
+- route file path/name: models/firestore_client.py
 
 
 ---
@@ -133,18 +133,31 @@ Information related to each HMC project
 * ### <b>attributes</b>
     * name: string - title of the project
     * description: string - description of the project
-    * members: list[tuples(strings)] - list of tuples, each containing (member name, member role)
+    * contributors: list of strings for each member id
     * link: string - url to project page, if one exists
-- route file path/name: api/v1/projects.py
+    * tech: string of tech ids
+- route file path/name: models/projects.py
+
+---
+### Tech
+Tech stack object
+* ### <b>attributes</b>
+    * name: string - name of the tech, ex: 'Flask'
+    * class: string - css classname for icon
+    * projects: list of strings of project ids
+    * members: list of strings of member ids for those who've used that tech
+- route file path/name: models/tech.py
 
 ---
 ### Members
 Members of HMC
 * ### <b>attributes</b>
     * id: string - uuid
-    * name: string - full name
-    * github_link: string - url to their github
-    * linkedin: string - url to their linkedin
-    * twitter: string - url to their twitter
-    * seeking: string - the role they are seeking
-- route file path/name: api/v1/members.py
+    * firstname: string - first name
+    * lastname: string - last name
+    * bio: string - paragraph written by student
+    * github: - string - url
+    * linkedin: string - url
+    * projects: list of strings of project ids
+    * title: string - whatever title they want to give themselves
+- route file path/name: models/members.py
