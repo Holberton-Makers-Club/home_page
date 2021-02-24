@@ -11,3 +11,14 @@ def all_members():
     if len(members) == 0:
         return jsonify({'Status': 'error', 'members': []}), 400
     return jsonify({'Status': 'OK', 'members': members}), 200
+
+@api_v1.route('/members/<id>', methods=['GET'], strict_slashes=False)
+def member_by_id(id):
+    r = requests.get(build_url('api/members')).json()
+    if r.get('status') == 'error':
+        return jsonify({'Status': 'error', 'members': {}}), 400
+    members = r.get('members')
+    for item in members:
+        if item.get("id") == id:
+            return jsonify({'Status': 'OK', 'member': item}), 200
+    return jsonify({'Status': 'error', 'members': {}}), 400
