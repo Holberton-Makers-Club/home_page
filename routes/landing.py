@@ -20,14 +20,18 @@ def projects():
         contributors = []
         for member_id in project.get("contributors"):
             r = requests.get(build_url(f"api/members/{str(member_id)}")).json()
-            member = r.get('member')
-            contributors.append(member)
+            member_obj = ''
+            if r.get('Status') == 'OK':
+                member_obj = r.get('member')
+                contributors.append(member_obj)
         project["contributors"] = contributors
         tech_list = []
         for tech_id in project.get("tech"):
             r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
-            tech_obj = r.get('tech')
-            tech_list.append(tech_obj)
+            tech_obj = ''
+            if r.get('Status') == 'OK':
+                tech_obj = r.get('tech')
+                tech_list.append(tech_obj)
         project["tech"] = tech_list
     return render_template('projects.html', projects=projects)
 
@@ -40,9 +44,11 @@ def members():
         tech_list = []
         for tech_id in member.get("tech"):
             r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
-            tech_obj = r.get('tech')
-            tech_list.append(tech_obj)
-        member["tech"] = tech_obj
+            tech_obj = ''
+            if r.get('Status') == 'OK':
+                tech_obj = r.get('tech')
+                tech_list.append(tech_obj)
+        member["tech"] = tech_list
     return render_template('members.html', members=members)
 
 @landing.route('/members/<id>', methods=['GET'], strict_slashes=False)
@@ -53,10 +59,20 @@ def member_profile(id):
     tech_list = []
     for tech_id in member.get("tech"):
         r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
-        tech_obj = r.get('tech')
-        tech_list.append(tech_obj)
+        tech_obj = ''
+        if r.get('Status') == 'OK':
+            tech_obj = r.get('tech')
+            tech_list.append(tech_obj)
     member["tech"] = tech_list
-    
+    proj_list = []
+    for proj_id in member.get("projects"):
+        r = requests.get(build_url(f"api/projects/{str(proj_id)}")).json()
+        proj_obj = ''
+        if r.get('Status') == 'OK':
+            print('here')
+            proj_obj = r.get('project')
+            proj_list.append(proj_obj)
+    member["projects"] = proj_list
     return render_template('profile.html', member=member)
 
 @landing.route('/projects/search', methods=['POST'], strict_slashes=False)
