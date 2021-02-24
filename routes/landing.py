@@ -21,6 +21,12 @@ def projects():
         for member_id in project.get("contributors"):
             r = requests.get(build_url(f"api/members/{str(member_id)}")).json()
             member = r.get('member')
+            tech_list = []
+            for tech_id in member.get("tech"):
+                r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
+                tech_obj = r.get('tech')
+                tech_list.append(tech_obj)
+            member["tech"] = tech_obj
             contributors.append(member)
         project["contributors"] = contributors
     return render_template('projects.html', projects=projects)
@@ -42,13 +48,9 @@ def members():
 @landing.route('/members/<id>', methods=['GET'], strict_slashes=False)
 def member_profile(id):
     """ projects page """
-    r = requests.get(build_url('api/members')).json()
-    members = r.get('members')
-    foundmember = None    
-    for member in members:
-        if id == member.get('id'):
-            foundmember = member
-    return render_template('profile.html', member=foundmember)
+    r = requests.get(build_url(f"api/members/{str(id)}")).json()
+    member = r.get('member')
+    return render_template('profile.html', member=member)
 
 @landing.route('/projects/search', methods=['POST'], strict_slashes=False)
 def search():
