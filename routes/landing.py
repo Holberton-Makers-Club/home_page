@@ -29,7 +29,14 @@ def projects():
 def members():
     """ projects page """
     r = requests.get(build_url('api/members')).json()
-    members = r.get('members')
+    members = r.get('members')   
+    for member in members:
+        tech_list = []
+        for tech_id in member.get("tech"):
+            r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
+            tech_obj = r.get('tech')
+            tech_list.append(tech_obj)
+        member["tech"] = tech_obj
     return render_template('members.html', members=members)
 
 @landing.route('/members/<id>', methods=['GET'], strict_slashes=False)
