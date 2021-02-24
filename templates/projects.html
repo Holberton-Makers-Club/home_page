@@ -30,6 +30,7 @@
             {% endif %}
             
             {% if projects %}
+        
             {% for project in projects %}
 
             <div class="card col-12 col-md-8 px-0 mx-auto my-2">
@@ -42,21 +43,21 @@
                     </p>
                     <div class="d-flex flex-wrap">
                         <ul>
-                            {% if project.members %}
+                            {% if project.contributors %}
                             <h5 class="card-subtitle">Contributors</h5>
-                            {% for member in project.members %}
-                            <a href="{% if member.profile_url %}{{ member.profile_url }}{% endif %}">
-                                <li>{{ member }}</li>
+                            {% for member in project.contributors %}
+                            <a href="/members/{{ member.id }}">
+                                <li>{{ member.firstname }} {{ member.lastname }}</li>
                             </a>
                             {% endfor %}
                             {% endif%}
                         </ul>
                         <ul>
-                            {% if project.technologies %}
+                            {% if project.tech %}
                             <h5 class="card-subtitle">Tech Stack</h5>
-                            <!-- {% for tech in project.technologies %} -->
-                            <i class="fab fa-python"></i>
-                            <!-- {% endfor %} -->
+                            {% for tech in project.tech %}
+                            <i class="{{ tech.class }}"></i>
+                            {% endfor %}
                             {% endif%}
                         </ul>
                     </div>
