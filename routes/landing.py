@@ -50,6 +50,13 @@ def member_profile(id):
     """ projects page """
     r = requests.get(build_url(f"api/members/{str(id)}")).json()
     member = r.get('member')
+    tech_list = []
+    for tech_id in member.get("tech"):
+        r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
+        tech_obj = r.get('tech')
+        tech_list.append(tech_obj)
+    member["tech"] = tech_list
+    
     return render_template('profile.html', member=member)
 
 @landing.route('/projects/search', methods=['POST'], strict_slashes=False)

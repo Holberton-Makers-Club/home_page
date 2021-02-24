@@ -22,3 +22,15 @@ def project_by_name(name):
         if item.name == name:
             return jsonify({'Status': 'OK', 'projects': item}), 200
     return jsonify({'Status': 'error', 'projects': {}}), 400
+
+# Travis to add this, something is missing maybe
+@api_v1.route('/projects/<id>', methods=['GET'], strict_slashes=False)
+def project_by_id(id):
+    r = requests.get(build_url('api/projects')).json()
+    if r.get('status') == 'error':
+        return jsonify({'Status': 'error', 'projects': {}}), 400
+    projects = r.get('projects')
+    for item in projects:
+        if item.get("id") == id:
+            return jsonify({'Status': 'OK', 'project': item}), 200
+    return jsonify({'Status': 'error', 'projects': {}}), 400
