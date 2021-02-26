@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<!-- projects section -->
+<section class="mb-3 container justify-content-center" id="projects">
+    <div class="py-4 w-100 mx-auto text-center">
+        <h1>Login/Register</h1>
+    </div>
+    <div class="card col-sm-12 col-md-6 mx-md-auto justify-content-center">
+        <!-- Login Form -->
+        <form name="login" id="login_form" method="POST" action="/login">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="john.jones@email.com">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="********">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="form-control bg-holb-red text-light font-weight-bold" id="submit-btn">
+            </div>
+            <a href="#" class="form_link" onclick="displayRegister()">Not a member? Sign Up</a>
+        </form>
+
+        <!-- Register Form -->
+        <form name="register" id="register_form" method="POST" action="/register">
+            <a href="#" class="form_link" onclick="displayLogin()">Already a member? Log In</a>
+            <div class="form-group">
+                <label for="firstname">First Name</label>
+                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Jane">
+            </div>
+            <div class="form-group">
+                <label for="lastname">Last Name</label>
+                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Doe">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="jane.doe@email.com">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="********">
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm password</label>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="********">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Register" class="form-control bg-holb-red text-light font-weight-bold" id="submit-btn">
+            </div>
+            
+        </form>
+
+    </div>
+
+    </div>
+
+
+
+</section>
+
+<script type="text/javascript">
+    function displayRegister(){
+        let login_form = document.getElementById('login_form');
+        console.log("something");
+        let register_form = document.getElementById('register_form');
+        console.log("something");
+        login_form.setAttribute('style','height: 0px;');
+        console.log("something");
+        register_form.setAttribute('style','height: 100%;');
+        console.log("something");
+    }
+
+    function displayLogin() {
+        let login_form = document.getElementById('login_form');
+        let register_form = document.getElementById('register_form');
+        login_form.setAttribute('style','height: 100%;');
+        register_form.setAttribute('style','height: 0px;');
+    }
+
+
+</script>
+
+
+{% endblock %}
