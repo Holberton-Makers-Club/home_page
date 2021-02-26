@@ -12,32 +12,32 @@
 
 {% if member %}
 
-
-<div class="d-flex flex-column w-100 my-0 align-items-center mb-5">  
     <!-- Member Profile -->
-    <div>
-        <h1>{{ member.firstname }} {{ member.lastname }}</h1>
-        <h6 class="card-subtitle mb-2 text-muted">{{ member.title }}</h6>
-        <p class="card-text">
-            {{ member.bio }}
-        </p>
-        <a href="{{ member.github }}" class="">
-            <i class="fab fa-github"></i>
-        </a>
-        <a href="{{ member.linkedin }}" class="">
-            <i class="fab fa-linkedin"></i>
-        </a>
-    </div>
-</div>
+    <section class="container">
+        <div class="d-flex flex-column w-100 my-0 align-items-center mb-5">  
+            <div>
+                <h1>{{ member.firstname }} {{ member.lastname }}</h1>
+                <h6 class="card-subtitle mb-2 text-muted">{{ member.title }}</h6>
+                <p class="card-text">
+                    {{ member.bio }}
+                </p>
+                <a href="{{ member.github }}" class="">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="{{ member.linkedin }}" class="">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </div>
+    </section>
 
-{% if member.projects %}
+    <!-- Member Projects -->
+    {% if member.projects %}
     {% set projects = member.projects %}
-        
-        <section class="container">
-            <div class="card-columns">
+    <section class="container">
+        <div class="card-deck">
             {% for project in projects %}
-
-                <div class="card">
+            <div class="card">
                 <div class="card-body">
                     <a href="{{ project.link }}"><h3 class="card-title">{{ project.name }}</h3></a>
                     <p class="card-text text-wrap">
@@ -54,20 +54,16 @@
                             {% endif%}
                         </ul>
                     </div>
-                    </div>  
-
                 </div>
-
-            {% endfor %}
-            {% endif %}
-
             </div>
-        </section>
-
+        {% endfor %}
+        </div>  
+    </section>  
+    {% endif %}
 
 {% else %}
 
-<h3>Member not found</h3>
+    <h3 class="text-center">Member not found</h3>
             
 {% endif %}
 
