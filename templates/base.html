@@ -37,11 +37,20 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('landing.projects') }}">PROJECTS</a>
+                            <a class="nav-link" href="{{ url_for('landing.projects') }}">Projects</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('landing.members') }}">MEMBERS</a>
+                            <a class="nav-link" href="{{ url_for('landing.members') }}">Members</a>
                         </li>
+                        {% if g.user %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('landing.index') }}">Logout</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('landing.index') }}">Login</a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
