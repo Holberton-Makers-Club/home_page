@@ -11,6 +11,11 @@ def index():
     """ about us page """
     return render_template('index.html')
 
+@landing.route('/login', methods=['GET'], strict_slashes=False)
+def login_page():
+    """ about us page """
+    return render_template('login.html')
+
 @landing.route('/projects', methods=['GET'], strict_slashes=False)
 def projects():
     """ projects page """
