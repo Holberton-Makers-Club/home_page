@@ -25,12 +25,32 @@
 * ### <b>I want to</b> understand the mission and activities of HMC
 * ### <b>so I can</b> decide if and how we may develop a partnership.
 ---
+* ### <b>As a</b> member of HMC
+* ### <b>I want to</b> log into the site
+* ### <b>so I can</b> modify my profile.
+---
+* ### <b>As a</b> developer of HMC
+* ### <b>I want to</b> log into the site
+* ### <b>so I can</b> modify projects without directly interfacing with the database.
+---
 
 ## ROUTES
 
 ## <b>GET</b> /
 ### user visits the landing page, which also serves as the About Us page
 * <b>returns:</b> a template that displays the what, why, and how to get involved/contact HMC
+
+## <b>GET</b> /login
+### user visits a login page
+* <b>returns:</b> a template that by default, displays a form for logging in. The user can also select a button titled 'Not a user? Register here.' or something similar. When selected the login form is replaced dynamically with a registration form. Both forms have three input fields, email, password, and submit. The login form has a name 'login' and register form has a name 'register'. Their actions should be named '/login' and '/register'. Their methods == POST, and inputs should have the names and ids 'email', 'password', and 'submit'.
+
+## <b>POST</b> /login
+### user submitted the login form displayed by the GET login route
+* <b>returns:</b> calls POST api/login to authenticate users. If successful it redirects to GET /members/<current user id>. Otherwise it redirects to the GET login route with a jinja variable error set to an error message string.
+
+## <b>POST</b> /register
+### user submitted the register form displayed by the GET login route
+* <b>returns:</b> calls POST api/register to register new users. If successful it redirects to GET /members/<current user id>. Otherwise it redirects to the GET login route with a jinja variable error set to an error message string.
 
 ## <b>GET</b> /projects
 ### user navigates to the Projects page from either About Us or Meet the Team
