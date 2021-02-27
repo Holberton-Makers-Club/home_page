@@ -11,30 +11,32 @@
 {% block content %}
 
 {% if member %}
-
     <!-- Member Profile -->
-    <section class="container">
-        <div class="d-flex flex-column w-100 my-0 align-items-center mb-5">  
-            <div>
-                <h1>{{ member.firstname }} {{ member.lastname }}</h1>
-                <h6 class="card-subtitle mb-2 text-muted">{{ member.title }}</h6>
-                <p class="card-text">
-                    {{ member.bio }}
-                </p>
-                <a href="{{ member.github }}" class="">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="{{ member.linkedin }}" class="">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-            </div>
+    <section class="container col-sm-10 col-md-8 col-lg-6 mb-4">
+        <div class="container text-center py-4">
+            <h1>{{ member.firstname }} {{ member.lastname }}</h1>
+            <h6 class="card-subtitle text-muted">{{ member.title }}</h6>
+            {% for tech in member.tech %}
+            <a href="{{ member[tech.name] }}" class="">
+                <i class="{{tech.class}}"></i>
+            </a>
+            {% endfor %}
+
         </div>
+
+        {% if member.bio %}
+        <div class="card-text  card-body">
+            <h3>About me</h3>
+            <p> {{ member.bio }} </p>
+        </div>
+        {% endif %}
+                
     </section>
 
     <!-- Member Projects -->
     {% if member.projects %}
     {% set projects = member.projects %}
-    <section class="container">
+    <section class="container col-sm-12 col-md-10 col-lg-8">
         <div class="card-deck">
             {% for project in projects %}
             <div class="card">
