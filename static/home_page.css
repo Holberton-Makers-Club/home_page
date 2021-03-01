@@ -30,12 +30,21 @@
     background-size: contain;
 }
 */
-
+.nav-link, a {
+    text-decoration: none;
+    color: rgb(0, 0, 0, 0.5);
+}
+.nav-link:hover, a:hover {
+    text-decoration: underline;
+    color: rgb(0, 0, 0, 0.7);
+}
 .bg-holb-red {
     background-color: #EB0045;
     width: 100%;
 }
-
+.danger:hover {
+    border: 2px solid #EB0045;
+}
 #register_form {
     height: 0px;
     /* transition: height 0.4s ease-in; */
@@ -48,12 +57,3 @@
     overflow: hidden;
 }
 
-.form_link {
-    text-decoration: none;
-    color: rgb(0, 0, 0, 0.5);
-}
-
-.form_link:hover {
-    text-decoration: none;
-    color: rgb(0, 0, 0, 0.7);
-}

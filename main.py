@@ -25,6 +25,8 @@ app.register_blueprint(landing)
 
 
 
+
+
 """
 ERROR HANDLERS
 """
