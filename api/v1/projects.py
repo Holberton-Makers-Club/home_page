@@ -7,7 +7,7 @@ from helpers import build_url
 @api_v1.route('/projects', methods=['GET'], strict_slashes=False)
 def all_projects():
     db = FirestoreClient()
-    projects = db.get_all_by_class('Project')
+    projects = db.get_by_class('Project')
     if len(projects) == 0:
         return jsonify({'Status': 'error', 'projects': []}), 400
     return jsonify({'Status': 'OK', 'projects': projects}), 200

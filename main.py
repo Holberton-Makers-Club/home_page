@@ -23,6 +23,12 @@ app.register_blueprint(api_v1)
 app.register_blueprint(landing)
 
 
+@app.before_request
+def before():
+    from models.auth import Auth
+    request.full_view, request.current_user = Auth.authenticate(request.url)
+    print(request.method, request.url, 'full view', request.full_view, 'current', request.current_user)
+    print()
 
 
 

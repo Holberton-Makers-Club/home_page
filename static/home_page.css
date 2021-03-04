@@ -30,8 +30,9 @@
     background-size: contain;
 }
 */
-.nav-link, a {
+.nav-link, a, ul, li {
     text-decoration: none;
+    list-style: none;
     color: rgb(0, 0, 0, 0.5);
 }
 .nav-link:hover, a:hover {

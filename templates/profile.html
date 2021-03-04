@@ -10,66 +10,78 @@
 
 {% block content %}
 
-{% if member %}
-    <!-- Member Profile -->
+{% if data %}
+    {% if data.user %}
+    {% set user = data.user %}
+    {% endif %}
+    {% if data.current_user %}
+    {% set current_user = data.current_user %}
+    {% endif %}
+    {% if data.full_view %}
+    {% set full_view = data.full_view %}
+    {% endif %}
+{% endif %}
+{% if user %}
+    <!-- current_user Profile -->
     <section class="container col-sm-10 col-md-8 col-lg-6 mb-4">
         <div class="container text-center py-4">
-            <h1>{{ member.firstname }} {{ member.lastname }}</h1>
-            <h6 class="card-subtitle text-muted">{{ member.title }}</h6>
-            {% for tech in member.tech %}
-            <a href="{{ member[tech.name] }}" class="">
+            <h1>{{ user.firstname }} {{ user.lastname }}</h1>
+            <h6 class="card-subtitle text-muted">{{ user.title }}</h6>
+            {% for tech in user.tech %}
+            <a href="{{ user[tech.name] }}" class="">
                 <i class="{{tech.class}}"></i>
             </a>
             {% endfor %}
 
         </div>
 
-        {% if member.bio %}
+        {% if user.bio %}
         <div class="card-text  card-body">
             <h3>About me</h3>
-            <p> {{ member.bio }} </p>
+            <p> {{ user.bio }} </p>
         </div>
         {% endif %}
 
                 
     </section>
 
-
+<!-- if signed in and viewing your own page -->
+{% if current_user %}
 <section class="container justify-content-center mb-4">
 <div class="card col-sm-12 col-md-6 mx-md-auto justify-content-center py-2">
     <h4>Edit</h4>
-    <form action="members/{{member.id}}" name="edit_profile_form" id="edit_profile_form" method="POST">
+    <form action="/users/{{current_user.id}}" name="edit_profile_form" id="edit_profile_form" method="POST">
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="{{member.email}}">
+            <input type="email" class="form-control" id="email" name="email" placeholder="{{current_user.email}}">
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="{% for char in member.password %}*{% endfor %}">
+            <input type="password" class="form-control" id="password" name="password" placeholder="{% for char in current_user.password %}*{% endfor %}">
         </div>
         <div class="form-group">
             <label for="firstname">First Name</label>
-            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="{{member.firstname}}">
+            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="{{current_user.firstname}}">
         </div>
         <div class="form-group">
             <label for="lastname">Last Name</label>
-            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="{{member.lastname}}">
+            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="{{current_user.lastname}}">
         </div>
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="{{member.title}}">
+            <input type="text" class="form-control" id="title" name="title" placeholder="{{current_user.title}}">
         </div>
         <div class="form-group">
             <label for="github">Github</label>
-            <input type="url" class="form-control" id="github" name="github" placeholder="{{member.github}}">
+            <input type="url" class="form-control" id="github" name="github" placeholder="{{current_user.github}}">
         </div>
         <div class="form-group">
             <label for="linkedin">LinkedIn</label>
-            <input type="url" class="form-control" id="linkedin" name="linkedin" placeholder="{{member.linkedin}}">
+            <input type="url" class="form-control" id="linkedin" name="linkedin" placeholder="{{current_user.linkedin}}">
         </div>
         <div class="form-group">
             <label for="bio">About me</label>
-            <textarea maxlength="333" rows="5" class="form-control" id="bio" name="bio" placeholder="{{member.bio}}"></textarea>
+            <textarea maxlength="333" rows="5" class="form-control" id="bio" name="bio" placeholder="{{current_user.bio}}"></textarea>
         </div>
         <div class="form-group">
             <input type="submit" value="UPDATE PROFILE" class="form-control bg-holb-red text-light font-weight-bold">
@@ -78,11 +90,12 @@
     
 </div>
 </section>
+{% endif %}
 
 
-    <!-- Member Projects -->
-    {% if member.projects %}
-    {% set projects = member.projects %}
+    <!-- user Projects -->
+    {% if user.projects %}
+    {% set projects = user.projects %}
     <section class="container col-sm-12 col-md-10 col-lg-8">
         <div class="card-deck">
             {% for project in projects %}
@@ -109,23 +122,26 @@
         </div>  
         
     </section>  
+
+        {% if current_user %}
 <hr>
     <section class="container mt-5">
         <div class="card col-sm-12 col-md-6 mx-md-auto justify-content-center alert alert-danger text-center">
             <h3>** Danger Zone **</h3>
-            <form action="/members/{{member.id}}/delete" name="delete_profile" id="delete_profile" method="POST">
+            <form action="/users/{{current_user.id}}/delete" name="delete_profile" id="delete_profile" method="POST">
                 <div class="form-group">
                     <input type="submit" value="DELETE ACCOUNT" class="danger form-control text-dark font-weight-bold">
                 </div>
             </form>
         </div>
     </section>
+        {% endif %}
     
     {% endif %}
 
 {% else %}
 
-    <h3 class="text-center">Member not found</h3>
+    <h3 class="text-center">member not found</h3>
             
 {% endif %}
 

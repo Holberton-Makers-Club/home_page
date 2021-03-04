@@ -14,21 +14,21 @@
             <h1 class="py-4 text-center">Members</h1>
     </div>
     <div class="card-columns">
-        {% for member in members %}
+        {% for user in users %}
         <div class="card">
             <div class="card-body">
-                <a href="/members/{{ member.id }}">
-                    <h4 class="card-title">{{ member.firstname }} {{ member.lastname }}</h4>
+                <a href="/users/{{ user.id }}">
+                    <h4 class="card-title">{{ user.firstname }} {{ user.lastname }}</h4>
                 </a>
-                <h6 class="card-subtitle mb-2 text-muted">{{ member.title }}</h6>
-                <a href="http://{{ member.github }}" class="">
+                <h6 class="card-subtitle mb-2 text-muted">{{ user.title }}</h6>
+                <a href="http://{{ user.github }}" class="">
                     <i class="fa fa-github"></i>
                 </a>
                 </a>
-                <a href="http://{{ member.linkedin }}" class="">
+                <a href="http://{{ user.linkedin }}" class="">
                     <i class="fa fa-linkedin"></i>
                 </a>
-                {% for tech in member.tech %}
+                {% for tech in user.tech %}
                 <!-- Going to add tech stacks worked in -->
                 {% endfor %}
             </div>

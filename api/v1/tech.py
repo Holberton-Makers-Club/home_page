@@ -8,7 +8,7 @@ from helpers import build_url
 @api_v1.route('/tech', methods=['GET'], strict_slashes=False)
 def all_tech():
     db = FirestoreClient()
-    techs = db.get_all_by_class('Tech')
+    techs = db.get_by_class('Tech')
     if len(techs) == 0:
         return jsonify({'Status': 'error', 'tech': []}), 400
     return jsonify({'Status': 'OK', 'tech': techs}), 200
