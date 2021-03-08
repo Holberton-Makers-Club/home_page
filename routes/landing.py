@@ -186,17 +186,18 @@ def users():
     }
     r = requests.get(build_url('api/users')).json()
     users = r.get('users')   
-    for user in users:
-        tech_list = []
-        if user.get('tech'):
-            for tech_id in user.get("tech"):
-                r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
-                tech_obj = ''
-                if r.get('Status') == 'OK':
-                    tech_obj = r.get('tech')
-                    tech_list.append(tech_obj)
-            user["tech"] = tech_list
-    return render_template('users.html', users=users, data=data)
+    if users:
+        for user in users:
+            tech_list = []
+            if user.get('tech'):
+                for tech_id in user.get("tech"):
+                    r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
+                    tech_obj = ''
+                    if r.get('Status') == 'OK':
+                        tech_obj = r.get('tech')
+                        tech_list.append(tech_obj)
+                user["tech"] = tech_list
+    return render_template('users.html', users=users if users else '', data=data)
 
 @landing.route('/users/<id>/delete', methods=['POST'], strict_slashes=False)
 def delete_account(id):
