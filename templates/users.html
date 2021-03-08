@@ -1,0 +1,44 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+{% extends 'base.html' %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<section class="container col-sm-12 col-md-10 col-lg-8">
+    <div class="container">
+            <h1 class="py-4 text-center">Members</h1>
+    </div>
+    <div class="card-columns">
+        {% for user in users %}
+        <div class="card">
+            <div class="card-body">
+                <a href="/users/{{ user.id }}">
+                    <h4 class="card-title">{{ user.firstname }} {{ user.lastname }}</h4>
+                </a>
+                <h6 class="card-subtitle mb-2 text-muted">{{ user.title }}</h6>
+                <a href="http://{{ user.github }}" class="">
+                    <i class="fa fa-github"></i>
+                </a>
+                </a>
+                <a href="http://{{ user.linkedin }}" class="">
+                    <i class="fa fa-linkedin"></i>
+                </a>
+                {% if user.tech %}
+                {% for tech in user.tech %}
+                <!-- Going to add tech stacks worked in -->
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</section>
+    
+
+  {% endblock %}

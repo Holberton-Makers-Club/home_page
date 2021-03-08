@@ -1,0 +1,91 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  {% block head %}
+  <meta charset="utf-8">
+
+  <title>Holberton Makers Club</title>
+  <meta name="author" content="Holberton Makers Club">
+  <meta name="viewport" content="width=device-width" initial-scale=1.0">
+
+  <!-- bootstrap stuff and scripts -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/v4-shims.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='home_page.css') }}">
+{% endblock %}
+</head>
+
+<body>
+    <header id="header" class="">
+        <!-- Nav Bar -->
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-md navbar-light static-top">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <img src="https://storage.googleapis.com/home-page-static-images/makers_text_logo.svg" alt="" height="80px">
+                    </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto d-flex align-items-end">
+                        <li class="nav-item">
+                            {% if data.current_user %}
+                            <a class="nav-link" href="{{ url_for('landing.index') }}">Dashboard</a>
+                            {% else %}
+                            <a class="nav-link" href="{{ url_for('landing.index') }}">Our Mission</a>
+                            {% endif %}
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('landing.projects') }}">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('landing.users') }}">Members</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="min-vh-100">
+
+    <!-- DISPLAY A MESSAGE IF ONE IS PASSED (ERRORS & SUCCESS MESSAGES)-->
+    <p class="text-center alert-danger">
+        {% if data %}
+            {% if data.msg %}
+                {{ data.msg }}
+            {% endif %}
+        {% endif %}
+        {% if error %}
+            {{ error }}
+        {% endif %}
+        
+    </p>
+    {% block content %}
+    {% endblock %}
+
+    </main>
+
+    <footer class="mb-0 bg-dark py-2 text-right">
+        {% if data %}
+        {% if data.current_user %}
+        <li class="nav-item">
+            <a class="nav-link text-light" href="{{ url_for('landing.logout') }}">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link text-light" href="{{ url_for('landing.login_page') }}">Student Portal</a>
+        </li>
+        {% endif %}
+        {% endif %}
+    </footer>
+</body>
+</html>

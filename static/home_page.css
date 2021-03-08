@@ -1,12 +1,4 @@
-#logo {
-    margin-left: 1.5rem;
-    margin-top: 0.5rem;
-    height: 5rem;
-    width: auto;
-    background-image: url('https://storage.googleapis.com/home-page-static-images/makers_text_logo.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-}
+
 .btn-primary {
     background-color: #be0037;
     border: 1px solid #be0037;
@@ -21,12 +13,48 @@
 .btn-alert {
     color: #be0037;
 }
-
+/* 
 @media only screen and (max-width: 768px) {
 
   #logo {
     margin-right: 1.5rem;
     background-image: url('https://storage.googleapis.com/home-page-static-images/makers_icon_logo.svg');
-    background-position-x: right;
+    background-position-x: center;
   }
+} 
+#logo {
+    margin-left: 1.5rem;
+    margin-top: 0.5rem;
+    height: 5rem;
+    background-repeat: no-repeat;
+    background-size: contain;
 }
+*/
+.nav-link, a, ul, li {
+    text-decoration: none;
+    list-style: none;
+    color: rgb(0, 0, 0, 0.5);
+}
+.nav-link:hover, a:hover {
+    text-decoration: underline;
+    color: rgb(0, 0, 0, 0.7);
+}
+.bg-holb-red {
+    background-color: #EB0045;
+    width: 100%;
+}
+.danger:hover {
+    border: 2px solid #EB0045;
+}
+#register_form {
+    height: 0px;
+    /* transition: height 0.4s ease-in; */
+    overflow: hidden;
+}
+
+#login_form {
+    height: 100%;
+    /* transition: height 0.4s ease-in; */
+    overflow: hidden;
+}
+
