@@ -28,9 +28,11 @@
                 <a href="http://{{ user.linkedin }}" class="">
                     <i class="fa fa-linkedin"></i>
                 </a>
+                {% if user.tech %}
                 {% for tech in user.tech %}
                 <!-- Going to add tech stacks worked in -->
                 {% endfor %}
+                {% endif %}
             </div>
         </div>
         {% endfor %}

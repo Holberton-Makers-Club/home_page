@@ -13,7 +13,7 @@ class Base():
         from uuid import uuid4
         for (k, v) in kwargs.items():
             setattr(self, k, v)
-        if not 'id' in kwargs.items():
+        if not kwargs.get('id'):
             self.id = str(uuid4())
 
     @classmethod
@@ -37,6 +37,7 @@ class Base():
         return self.__dict__
 
     def save(self):
+        print('saving')
         Base.db_client.save(self)
 
     @classmethod
@@ -45,3 +46,7 @@ class Base():
 
     def delete(self):
         Base.db_client.delete(self)
+    
+    @classmethod
+    def delete_by_id(cls, id):
+        Base.db_client.delete_by_id(cls, id)

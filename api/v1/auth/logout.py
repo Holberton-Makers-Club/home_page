@@ -6,8 +6,11 @@ from models.auth.session import Session
 
 @api_v1.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout():
+    print(request.cookies)
     user_session = request.cookies.get('session')
+    print(user_session, 'request cookie')
     matching_session = Session.get_by_id(user_session)
+    print('session get by id', matching_session)
     response = {
         'status': 'error',
         'message': 'logout failed'

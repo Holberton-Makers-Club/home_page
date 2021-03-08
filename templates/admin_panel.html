@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<section class="container justify-content-center mb-4" id="projects">
+    <div class="container">
+            <h1 class="py-4 text-center" id="title">Create User</h1>
+    </div>
+    <div class="card col-sm-12 col-md-6 mx-md-auto justify-content-center py-2">
+        <!-- Login Form -->
+        <form name="login" id="login_form" method="POST" action="/login">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="john.jones@email.com">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="********">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="LOGIN" class="form-control bg-holb-red text-light font-weight-bold" id="submit-btn">
+            </div>
+            <a href="#" class="form_link" onclick="displayRegister()">Not a member? Register</a>
+        </form>
+    </div>
+</section>
+
+
+
+{% endblock %}

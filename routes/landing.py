@@ -2,9 +2,10 @@ from api import all_projects
 
 from flask import Blueprint, render_template, request, url_for, g, redirect, make_response
 import requests
-from helpers import build_url
+from helpers import build_url, login_required, admin_required
 
 landing = Blueprint("landing", __name__, url_prefix="")
+
 
 @landing.route('/', methods=['GET'], strict_slashes=False)
 def index():
@@ -16,12 +17,21 @@ def index():
         'full_view': request.full_view
     }
     if request.current_user:
-        return render_template('welcome.html', data=data)
+        return redirect(url_for('landing.dashboard'))
     return render_template('index.html', data=data)
 
 
 
-
+@landing.route('/some', methods=['GET'], strict_slashes=False)
+@admin_required
+def some():
+    from models.auth import Auth
+    current_user = Auth.get_current_user()
+    data = {
+        'current_user': current_user,
+        'full_view': request.full_view
+    }
+    return render_template('dashboard.html', data=data)
 
 
 
@@ -33,19 +43,28 @@ def login_page():
     current_user = Auth.get_current_user()
     data = {
         'current_user': current_user,
-        'full_view': request.full_view
+        'full_view': request.full_view,
     }
-    error = request.args.get('data')
-    return render_template('login.html', error=error, data=data)
+    return render_template('login.html', data=data)
 
 @landing.route('/login', methods=['POST'], strict_slashes=False)
 def login_form_submit():
     """ login form """
-    response = requests.post(build_url('api/sessions'), data=request.form).json()
+    return start_session(request)
+
+
+def start_session(r):
+    response = requests.post(build_url('api/sessions'), data=r.form).json()
+    print(r.form)
+    print(response)
     if not response or response.get('status') == 'error':
-        return redirect(url_for('landing.login_page', data=response.get('message')))
+        data = {
+            'msg': response.get('message')
+        }
+        return render_template('login.html', data=data)
     user = response.get('user')
-    data = display_user_with_projects(request, user)
+    print(user)
+    data = display_user_with_projects(r, user)
     data['msg'] = response.get('message')
     data['current_user'] = data.get('user')
     res = make_response(render_template('profile.html', data=data))
@@ -69,14 +88,15 @@ def logout():
     current_user = Auth.get_current_user()
     data = {
         'current_user': current_user,
-        'full_view': request.full_view
+        'full_view': request.full_view,
     }
     cookie = request.cookies.get('session')
     if not cookie:
         return render_template('login.html', data=data)
-    sess_dict = Session.sessions.get(cookie)
-    session_obj = Session(**sess_dict)
-    session_obj.delete()
+    matching_session = Session.get_by_id(cookie)
+    if not matching_session:
+        return render_template('login.html', data=data)
+    Session.delete_by_id(cookie)
     del Session.sessions[cookie]
     # delete request to api/sessions/<request.cookies>
     # data dict with current_user = user
@@ -88,7 +108,14 @@ def logout():
 def register():
     """ about us page """
     # post request to api/users to create new one
-    # check if worked
+    response = requests.post(build_url('api/users'), data=request.form).json()
+    if response.get('status') == 'error':
+        data = {
+            'msg': response.get('message')
+        }
+        return render_template('login.html', data=data)
+    print('user created')
+    return start_session(request)
     # post to api/sessions
     # using user id from that, get user from /users
     # data dict with current_user = user
@@ -104,7 +131,16 @@ def register():
     return render_template('login.html', data=data)
 
 
-
+@landing.route('/dash', methods=['GET'], strict_slashes=False)
+@login_required
+def dashboard():
+    from models.auth import Auth
+    current_user = Auth.get_current_user()
+    data = {
+        'current_user': current_user,
+        'full_view': request.full_view
+    }
+    return render_template('dashboard.html', data=data)
 
 
 
@@ -152,13 +188,14 @@ def users():
     users = r.get('users')   
     for user in users:
         tech_list = []
-        for tech_id in user.get("tech"):
-            r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
-            tech_obj = ''
-            if r.get('Status') == 'OK':
-                tech_obj = r.get('tech')
-                tech_list.append(tech_obj)
-        user["tech"] = tech_list
+        if user.get('tech'):
+            for tech_id in user.get("tech"):
+                r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
+                tech_obj = ''
+                if r.get('Status') == 'OK':
+                    tech_obj = r.get('tech')
+                    tech_list.append(tech_obj)
+            user["tech"] = tech_list
     return render_template('users.html', users=users, data=data)
 
 @landing.route('/users/<id>/delete', methods=['POST'], strict_slashes=False)
@@ -177,50 +214,47 @@ def delete_account(id):
 def user_profile(id):
     """ profile page """
     from models.auth import Auth
+    if not id == request.current_user:
+        r = requests.get(build_url(f"api/users/{str(id)}")).json()
+        user = r.get('user')
+    else:
+        user = Auth.get_current_user()
+    data = display_user_with_projects(request, user)
     if request.method == 'GET':
-        if not id == request.current_user:
-            r = requests.get(build_url(f"api/users/{str(id)}")).json()
-            user = r.get('user')
-        else:
-            user = Auth.get_current_user()
-        data = display_user_with_projects(request, user)
         return render_template('profile.html', data=data)
     # UPDATE users profile
     if request.method == 'POST':
-        f = request.form
-        email, password = f.get('email'), f.get('password')
-        first, last = f.get('firstname'), f.get('lastname')
-        title, bio = f.get('title'), f.get('bio')
-        github, linkedin = f.get('github'), f.get('linkedin')
+        response = requests.put(build_url(f'api/users/{id}'), data=request.form).json()
+        if response.get('status') == 'error':
+            data['msg'] = response.get('message')
+            return render_template('profile.html', data=data)
         # do the update here
-        return redirect(url_for('landing.index'))
+        return redirect(url_for('landing.user_profile', id=id))
 
 def display_user_with_projects(request, user):
     from models.auth import Auth
     current_user = Auth.get_current_user()
-    print(current_user, 'current user is')
     
     full_view = request.full_view
     tech_list = []
-    for tech_id in user.get("tech"):
-        r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
-        tech_obj = ''
-        if r.get('Status') == 'OK':
-            tech_obj = r.get('tech')
-            tech_list.append(tech_obj)
-    user["tech"] = tech_list
+    if user and user.get('tech'):
+        for tech_id in user.get("tech"):
+            r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
+            tech_obj = ''
+            if r.get('Status') == 'OK':
+                tech_obj = r.get('tech')
+                tech_list.append(tech_obj)
+        user["tech"] = tech_list
     proj_list = []
-    for proj_id in user.get("projects"):
-        r = requests.get(build_url(f"api/projects/{str(proj_id)}")).json()
-        proj_obj = ''
-        if r.get('Status') == 'OK':
-            proj_obj = r.get('project')
-            proj_list.append(proj_obj)
-    user["projects"] = proj_list
-    print('**********', current_user)
-    print('**********', user)
-    if current_user.get('id') == user.get('id'):
-        print('in if', current_user)
+    if user.get('projects'):
+        for proj_id in user.get("projects"):
+            r = requests.get(build_url(f"api/projects/{str(proj_id)}")).json()
+            proj_obj = ''
+            if r.get('Status') == 'OK':
+                proj_obj = r.get('project')
+                proj_list.append(proj_obj)
+        user["projects"] = proj_list
+    if current_user and current_user.get('id') == user.get('id'):
         current_user = user
     else:
         current_user = None
@@ -265,4 +299,5 @@ def search():
     if len(matches) == 0:
         matches = projects
         msg = f'{query} not found'
+    # pub_data, auth_data, my_auth_data, my_role_auth_data
     return render_template('projects.html', projects=matches, msg=msg, data=data)

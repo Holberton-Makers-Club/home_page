@@ -42,3 +42,6 @@ class FirestoreClient():
     
     def delete(self, obj):
         self.db.collection(obj.__class__.__name__).document(obj.id).delete()
+    
+    def delete_by_id(self, cls, id):
+        self.db.collection(cls.__name__).document(id).delete()
