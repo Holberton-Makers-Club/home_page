@@ -140,9 +140,39 @@ def dashboard():
         'current_user': current_user,
         'full_view': request.full_view
     }
-    return render_template('dashboard.html', data=data)
+    r = requests.get(build_url('api/projects')).json()
+    projects = r.get('projects')
+    for project in projects:
+        contributors = []
+        for user_id in project.get("contributors"):
+            r = requests.get(build_url(f"api/users/{str(user_id)}")).json()
+            user_obj = ''
+            if r.get('Status') == 'OK':
+                user_obj = r.get('user')
+                contributors.append(user_obj)
+        project["contributors"] = contributors
+        tech_list = []
+        if project.get('tech'):
+            print('tech in here')
+            for tech_id in project.get("tech"):
+                r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
+                tech_obj = ''
+                if r.get('Status') == 'OK':
+                    tech_obj = r.get('tech')
+                    tech_list.append(tech_obj)
+            project["tech"] = tech_list
+    return render_template('dashboard.html', projects=projects, data=data)
 
-
+@landing.route('/submit_project', methods=['GET'], strict_slashes=False)
+@login_required
+def submit_project():
+    from models.auth import Auth
+    current_user = Auth.get_current_user()
+    data = {
+        'current_user': current_user,
+        'full_view': request.full_view
+    }
+    return render_template('submit_project.html', data=data)
 
 
 @landing.route('/projects', methods=['GET'], strict_slashes=False)
@@ -166,14 +196,16 @@ def projects():
                 contributors.append(user_obj)
         project["contributors"] = contributors
         tech_list = []
-        for tech_id in project.get("tech"):
-            r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
-            tech_obj = ''
-            if r.get('Status') == 'OK':
-                tech_obj = r.get('tech')
-                tech_list.append(tech_obj)
-        project["tech"] = tech_list
-    return render_template('projects.html', projects=projects, data=data)
+        if project.get('tech'):
+            print('tech in here')
+            for tech_id in project.get("tech"):
+                r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
+                tech_obj = ''
+                if r.get('Status') == 'OK':
+                    tech_obj = r.get('tech')
+                    tech_list.append(tech_obj)
+            project["tech"] = tech_list
+    return render_template('gallery.html', projects=projects, data=data)
 
 @landing.route('/users', methods=['GET'], strict_slashes=False)
 def users():
@@ -184,6 +216,7 @@ def users():
         'current_user': current_user,
         'full_view': request.full_view
     }
+    print(build_url('api/users'))
     r = requests.get(build_url('api/users')).json()
     users = r.get('users')   
     if users:
@@ -301,4 +334,4 @@ def search():
         matches = projects
         msg = f'{query} not found'
     # pub_data, auth_data, my_auth_data, my_role_auth_data
-    return render_template('projects.html', projects=matches, msg=msg, data=data)
+    return render_template('gallery.html', projects=matches, msg=msg, data=data)

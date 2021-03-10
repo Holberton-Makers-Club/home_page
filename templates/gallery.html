@@ -1,7 +1,4 @@
-<!doctype html>
 
-<html lang="en">
-<head>
 {% extends 'base.html' %}
 
 {% block head %}
@@ -10,10 +7,19 @@
 
 {% block content %}
 
-    <!-- projects section -->    
+
+
+<!-- projects section -->    
     <section class="mb-3 container justify-content-center"  id="projects">
         <div class="container">
-            <h1 class="py-4 text-center">Projects</h1>
+            
+            <h1 class="py-4 text-center">
+                {% if data.current_user %}
+                All Projects
+                {% else %}
+                Gallery
+                {% endif %}
+            </h1>
         </div>
         <div class="d-flex flex-column w-100 my-0 align-items-center">
             
@@ -75,5 +81,10 @@
 
         
     </section>
+
+
+
+
+    
 
   {% endblock %}

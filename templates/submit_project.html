@@ -1,0 +1,54 @@
+
+{% extends 'base.html' %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+
+
+{% if data.current_user %}
+
+
+
+<section class="container justify-content-center mb-4" id="submit_project">
+    <div class="container">
+            <h1 class="py-4 text-center" id="title">New Project</h1>
+        </div>
+    <div class="card col-sm-12 col-md-6 mx-md-auto justify-content-center py-2">
+        <!-- Login Form -->
+        <form name="submit_project" id="submit_project_form" method="POST" action="/projects">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Project title">
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea style="resize: none;" rows="5" cols="333" maxlength="333" class="form-control" id="description" name="description" placeholder="1-3 sentences about the general idea"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="features">Feature Backlog <span class="txt-holb-red">(optional)</span></label>
+                <textarea style="resize: none;" rows="5" cols="333" maxlength="333" class="form-control" id="features" name="features" placeholder="Long term vision here"></textarea>
+            </div>
+            
+            <h5>Sprint 0</h5>
+            <div class="form-group">
+                <label for="minimal">Minimal version</label>
+                <textarea style="resize: none;" rows="5" cols="333" maxlength="333"  class="form-control" id="minimal" name="minimal" placeholder="Most fundamental feature(s) we could build in one sprint. Example: If the project vision were to build a clone of instagram, the sprint 0 MVP could be a single page where anyone can view and post photos."></textarea>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="SUBMIT PROJECT" class="form-control bg-holb-red text-light font-weight-bold" id="submit-btn">
+            </div>
+        </form>
+    </div>
+</section>
+{% else %}
+must be logged in to view this page
+{% endif %}
+
+
+{% endblock %}

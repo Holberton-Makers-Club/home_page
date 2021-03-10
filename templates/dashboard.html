@@ -5,6 +5,95 @@
 {% endblock %}
 
 {% block content %}
-<h1>Welcome!</h1>
+
+
+
+{% if data.current_user %}
+
+
+
+<section class="container justify-content-center mb-4" id="submit_project">
+    <div class="container">
+            <h1 class="py-4 text-center" id="title">Dashboard</h1>
+    </div>
+    <div class="card-columns justify-content-center">
+        <!-- dashboard actions -->
+        <div class="card py-1">
+            <a class="card-body px-0" href="{{url_for('landing.submit_project')}}">
+                    <h4 class="card-title text-center">Submit Project</h4>
+            </a>        
+        </div>
+        
+    </div>
+</section>
+
+
+
+
+<!-- projects section -->    
+    <section class="container justify-content-center mb-4"  id="projects">
+
+        <div class="col-sm-12 col-md-6 mx-md-auto justify-content-center py-2">
+            
+            <!-- search bar -->
+                <form class="form-inline" action="/projects/search" method="POST">
+                    <label class="sr-only" for="searchBar">Search by project name</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2 col-12 col-md-6" id="searchBar" name="searchBar" placeholder="Enter Search">
+                    <button type="submit" class="form-control bg-holb-red text-light font-weight-bold">SEARCH</button>
+                </form>
+            {% if msg %}
+            <span class="btn-alert">{{ msg }}</span>
+            {% endif %}
+        </div>
+            
+            {% if projects %}
+        
+            {% for project in projects %}
+
+                <div class="card col-sm-12 col-md-6 mx-md-auto justify-content-center py-2">
+                    <a href="{{ project.link }}"><h3 class="card-title">{{ project.name }}</h3></a>
+                    <p class="card-text text-wrap">
+                        {% if project.description %}
+                        {{ project.description }}
+                        {% endif %}
+                    </p>
+                    <div class="d-flex flex-wrap">
+                        <ul>
+                            {% if project.contributors %}
+                            <h5 class="card-subtitle">Contributors</h5>
+                            {% for member in project.contributors %}
+                            <a href="/members/{{ member.id }}">
+                                <li>{{ member.firstname }} {{ member.lastname }}</li>
+                            </a>
+                            {% endfor %}
+                            {% endif%}
+                        </ul>
+                        <ul>
+                            {% if project.tech %}
+                            <h5 class="card-subtitle">Tech Stack</h5>
+                            {% for tech in project.tech %}
+                            <i class="{{ tech.class }}"></i>
+                            {% endfor %}
+                            {% endif%}
+                        </ul>
+                    </div>
+
+                </div>
+
+            {% endfor %}
+            {% endif %}
+            
+       
+        
+
+        
+    </section>
+
+
+
+
+
+
+{% endif %}
 
 {% endblock %}

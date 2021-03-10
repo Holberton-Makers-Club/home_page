@@ -43,6 +43,9 @@
     background-color: #EB0045;
     width: 100%;
 }
+.txt-holb-red {
+    color: #EB0045;
+}
 .danger:hover {
     border: 2px solid #EB0045;
 }
