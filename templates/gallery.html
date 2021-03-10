@@ -8,9 +8,8 @@
 {% block content %}
 
 
-
 <!-- projects section -->    
-    <section class="mb-3 container justify-content-center"  id="projects">
+    <section class="container justify-content-center mb-4"  id="projects">
         <div class="container">
             
             <h1 class="py-4 text-center">
@@ -20,31 +19,32 @@
                 Gallery
                 {% endif %}
             </h1>
-        </div>
-        <div class="d-flex flex-column w-100 my-0 align-items-center">
-            
             <!-- search bar -->
-            <div class="mx-auto col-12 col-md-8 my-2 py-0" style="padding-left:0!important; padding-right:0!important;">
+            <div class="mx-auto col-12 my-2 py-0" style="padding-left:0!important; padding-right:0!important;">
                 <form class="form-inline" action="/projects/search" method="POST">
                     <label class="sr-only" for="searchBar">Search by project name</label>
                     <input type="text" class="form-control mb-2 mr-sm-2 col-12 col-md-6" id="searchBar" name="searchBar" placeholder="Enter Search">
                     <button type="submit" class="btn btn-primary mb-2 col-12 col-md-auto">Search</button>
                 </form>
             </div>
+
             {% if msg %}
             <span class="btn-alert">{{ msg }}</span>
             {% endif %}
             
+
             {% if projects %}
         
+            <div class="card-columns">
             {% for project in projects %}
 
-            <div class="card col-12 col-md-8 px-0 mx-auto my-2">
-                <div class="card-body">
+                <div class="card">
+                    <div class="card-body">
                     <a href="{{ project.link }}"><h3 class="card-title">{{ project.name }}</h3></a>
                     <p class="card-text text-wrap">
                         {% if project.description %}
                         {{ project.description }}
+                        
                         {% endif %}
                     </p>
                     <div class="d-flex flex-wrap">
@@ -62,7 +62,7 @@
                             {% if project.tech %}
                             <h5 class="card-subtitle">Tech Stack</h5>
                             {% for tech in project.tech %}
-                            <i class="{{ tech.class }}"></i>
+                            {{tech.type}}: <a href="/{{tech.name}}">{{tech.name}}</a>
                             {% endfor %}
                             {% endif%}
                         </ul>
@@ -72,16 +72,12 @@
             </div>
 
             {% endfor %}
-            {% endif %}
-            
-            
-            
         </div>
-        
 
+            </div>
+            {% endif %}
         
     </section>
-
 
 
 

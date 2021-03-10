@@ -2,10 +2,12 @@
 .btn-primary {
     background-color: #be0037;
     border: 1px solid #be0037;
+    color: white;
 }
 .btn-primary:hover {
-    background-color: #a80231;
-    border: 1px solid black;
+    background-color: #c90c41;
+    border: 1px solid #be0037;
+    color: white;
 }
 .card-title {
     color: #be0037;

@@ -142,25 +142,9 @@ def dashboard():
     }
     r = requests.get(build_url('api/projects')).json()
     projects = r.get('projects')
-    for project in projects:
-        contributors = []
-        for user_id in project.get("contributors"):
-            r = requests.get(build_url(f"api/users/{str(user_id)}")).json()
-            user_obj = ''
-            if r.get('Status') == 'OK':
-                user_obj = r.get('user')
-                contributors.append(user_obj)
-        project["contributors"] = contributors
-        tech_list = []
-        if project.get('tech'):
-            print('tech in here')
-            for tech_id in project.get("tech"):
-                r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
-                tech_obj = ''
-                if r.get('Status') == 'OK':
-                    tech_obj = r.get('tech')
-                    tech_list.append(tech_obj)
-            project["tech"] = tech_list
+    for p in projects:
+        p['tech'] = [{'name': 'Flask', 'type': 'Backend Framework'}]
+        p['description'] = 'This is the project description. This is the project description. This is the project description. This is the project description. This is the project description. This is the project description.'
     return render_template('dashboard.html', projects=projects, data=data)
 
 @landing.route('/submit_project', methods=['GET'], strict_slashes=False)
