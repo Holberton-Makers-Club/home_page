@@ -149,7 +149,7 @@ def dashboard():
 
 @landing.route('/submit_project', methods=['GET'], strict_slashes=False)
 @login_required
-def submit_project():
+def submit_project_page():
     from models.auth import Auth
     current_user = Auth.get_current_user()
     data = {
@@ -158,6 +158,19 @@ def submit_project():
     }
     return render_template('submit_project.html', data=data)
 
+
+@landing.route('/projects', methods=['POST'], strict_slashes=False)
+def submit_project():
+    print(1)
+    r = requests.post(build_url("api/projects"), data=request.form).json()
+    print(2)
+    if r.get('status') == 'error':
+        data = {
+            'msg': 'Failed to create new project.'
+        }
+        return render_template('submit_project.html', data=data)
+    return redirect(url_for('landing.dashboard'))
+    
 
 @landing.route('/projects', methods=['GET'], strict_slashes=False)
 def projects():
