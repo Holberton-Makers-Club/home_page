@@ -5,6 +5,8 @@ class Auth():
     def authenticate(cls, url):
         """ parent method of Auth class, all others called from here """
         route = Auth.get_route(url)
+        print(1)
+        print(route)
         if not route:
             abort(400)
         # check if route is public, private, or neither
@@ -19,17 +21,12 @@ class Auth():
         """
         format the request url to isolate the route
         """
-        if url.startswith('http://127.0.0.1'):
-            """
-            # USE THIS IN PRODUCTION
-            if not url.startswith('https'):
-                return None
-            """
-            return url[21:]
-        elif url.startswith('https://holbertonmakers.club'):
-            return url[32:]
-        else:
-            return None
+        print(url, 'url here')
+        if not 'com' in url:
+            if not 'club' in url:
+                return url.split('8080')[-1]
+            return url.split('club')[-1]
+        return url.split('com')[-1]
 
     @classmethod
     def public_route(cls, route):
