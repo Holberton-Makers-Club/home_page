@@ -36,17 +36,19 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto d-flex align-items-end">
                         <li class="nav-item">
+                            {% if data %}
                             {% if data.current_user %}
                             <a class="nav-link" href="{{ url_for('landing.index') }}">Dashboard</a>
                             {% else %}
-                            <a class="nav-link" href="{{ url_for('landing.index') }}">Our Mission</a>
+                            <a class="nav-link" href="{{ url_for('landing.index') }}">Mission</a>
+                            {% endif %}
                             {% endif %}
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('landing.projects') }}">Projects</a>
+                            <a class="nav-link" href="{{ url_for('landing.projects') }}">Gallery</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('landing.users') }}">Members</a>
+                            <a class="nav-link" href="{{ url_for('landing.users') }}">Makers</a>
                         </li>
                         
                     </ul>
@@ -70,6 +72,10 @@
         
     </p>
     {% block content %}
+
+    {% endblock %}
+
+    {% block projects %}
     {% endblock %}
 
     </main>

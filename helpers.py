@@ -4,9 +4,11 @@ from functools import wraps
 
 def build_url(endpoint):
     # in deployment
-    # return 'home-page-304402.uc.r.appspot.com/' + endpoint
+    # return 'http://127.0.0.1:8080/' + endpoint
     # in development
-    return 'http://127.0.0.1:8080/' + endpoint
+    return 'https://home-page-2-307010.uc.r.appspot.com/' + endpoint
+    
+    
 
 def login_required(f):
     @wraps(f)

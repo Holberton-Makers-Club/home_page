@@ -2,11 +2,11 @@ from api.v1 import api_v1
 from models.storage.firestore_client import FirestoreClient
 from flask import jsonify, request
 import requests
-from helpers import build_url
 from models.users import User
 
 @api_v1.route('/users', methods=['GET'], strict_slashes=False)
 def all_users():
+    print('in here')
     users = User.get_by_class()
     if len(users) == 0:
         return jsonify({'status': 'error', 'users': []}), 400
