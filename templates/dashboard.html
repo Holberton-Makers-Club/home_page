@@ -9,6 +9,7 @@
 
 
 {% if data.current_user %}
+{% set current_user = data.current_user %}
 
 
 
@@ -83,18 +84,32 @@
 
                     </details>
 
+                    {% if current_user.interested %}
+                        {% if project.id in current_user.interested %}
+                        <!--remove interest form here-->
+                        <form class="mt-4" action="/revoke-interest/{{project.id}}" name="revoke-interest-form" id="revoke-interest{{project.id}}" method="POST">
+                            <div class="form-group">
+                                <input type="submit" name="revoke-interested" value="revoke interest" class="btn-primary btn">
+                            </div>
+                        </form>
+
+                        {% else %}
+
+                        <form class="mt-4" action="/express-interest/{{project.id}}" name="express-interest-form" id="express-interest{{project.id}}" method="POST">
+                            <div class="form-group">
+                                <input type="submit" name="express-interest" value="express interest" class="interested btn">
+                            </div>
+                        </form>
+
+                        {% endif %}
+                        {% endif %}
+
             </div>
 
-                <form class="mt-4" action="/signup/{{project.id}}" name="signup" id="signup" method="POST">
-                    <div class="form-group">
-                        <input onclick="hideInterestForm('interest-fields-{{project.id}}')" type="radio" id="not-interested" name="interest" value="Not Interested" checked>
-                        <label for="not-interested">Not Interested</label>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="radio" id="interested" name="interest" value="Interested" onclick="showInterestForm('interest-fields-{{project.id}}')">
-                        <label for="interested">Interested</label>
-                    </div>
+                
+                    <!--
+                        onclick="hideInterestForm('interest-fields-{{project.id}}')"
+                        onclick="showInterestForm('interest-fields-{{project.id}}')"
                     <div class="form-group" id="interest-{{project.id}}">
                         <div class="form-group">
                             <select disabled class="form-control interest-fields-{{project.id}} mb-2">
@@ -116,7 +131,7 @@
                             <input class="btn btn-primary interest-fields-{{project.id}}" disabled type="submit" name="submit-interest-{{project.id}}" id="submit-interest-{{project.id}}">
                         </div>
                     </div>
-                </form>
+                    -->
 
                 <hr class="my-4">
             {% endfor %}
@@ -126,7 +141,7 @@
         </div>
     </section>
 
-
+<!--
 <script>
 
 window.onload = function doSomething(){
@@ -152,6 +167,7 @@ function hideInterestForm(className) {
 }
 
 </script>
+-->
         
 
 

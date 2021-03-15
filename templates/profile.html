@@ -97,7 +97,6 @@
 </section>
 {% endif %}
 
-
     <!-- user Projects -->
     {% if user.projects %}
     {% set projects = user.projects %}
@@ -127,7 +126,9 @@
         </div>  
         
     </section>  
+    {% endif %}
 
+    
         {% if current_user %}
 <hr>
     <section class="container mt-5">
@@ -142,7 +143,6 @@
     </section>
         {% endif %}
     
-    {% endif %}
 
 {% else %}
 

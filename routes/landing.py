@@ -20,6 +20,43 @@ def index():
         return redirect(url_for('landing.dashboard'))
     return render_template('index.html', data=data)
 
+@landing.route('/express-interest/<project_id>', methods=['POST'], strict_slashes=False)
+@login_required
+def express_interest(project_id):
+    from models.auth import Auth
+    current_user = Auth.get_current_user()
+    data = {
+        'current_user': current_user,
+        'full_view': request.full_view
+    }
+    response = requests.put(build_url(f'api/users/{current_user.get("id")}'), data={'interested': project_id}).json()
+    print(response)
+    if not response.get('status') == 'OK':
+        r = requests.get(build_url('api/projects')).json()
+        projects = r.get('projects')
+        data['msg'] = 'request failed'
+        return render_template('dashboard.html', data=data, projects=projects)
+    return redirect(url_for('landing.index'))
+    
+    
+@landing.route('/revoke-interest/<project_id>', methods=['POST'], strict_slashes=False)
+@login_required
+def revoke_interest(project_id):
+    from models.auth import Auth
+    current_user = Auth.get_current_user()
+    data = {
+        'current_user': current_user,
+        'full_view': request.full_view
+    }
+    response = requests.put(build_url(f'api/users/{current_user.get("id")}'), data={'not-interested': project_id}).json()
+    print(response)
+    if not response.get('status') == 'OK':
+        r = requests.get(build_url('api/projects')).json()
+        projects = r.get('projects')
+        data['msg'] = 'request failed'
+        return render_template('dashboard.html', data=data, projects=projects)
+    return redirect(url_for('landing.index'))
+
 
 
 @landing.route('/some', methods=['GET'], strict_slashes=False)
@@ -55,15 +92,12 @@ def login_form_submit():
 
 def start_session(r):
     response = requests.post(build_url('api/sessions'), data=r.form).json()
-    print(r.form)
-    print(response)
     if not response or response.get('status') == 'error':
         data = {
             'msg': response.get('message')
         }
         return render_template('login.html', data=data)
     user = response.get('user')
-    print(user)
     data = display_user_with_projects(r, user)
     data['msg'] = response.get('message')
     data['current_user'] = data.get('user')
@@ -114,7 +148,6 @@ def register():
             'msg': response.get('message')
         }
         return render_template('login.html', data=data)
-    print('user created')
     return start_session(request)
     # post to api/sessions
     # using user id from that, get user from /users
@@ -142,9 +175,6 @@ def dashboard():
     }
     r = requests.get(build_url('api/projects')).json()
     projects = r.get('projects')
-    for p in projects:
-        p['tech'] = [{'name': 'Flask', 'type': 'Backend Framework'}]
-        p['description'] = 'This is the project description. This is the project description. This is the project description. This is the project description. This is the project description. This is the project description.'
     return render_template('dashboard.html', projects=projects, data=data)
 
 @landing.route('/submit_project', methods=['GET'], strict_slashes=False)
@@ -161,9 +191,7 @@ def submit_project_page():
 
 @landing.route('/projects', methods=['POST'], strict_slashes=False)
 def submit_project():
-    print(1)
     r = requests.post(build_url("api/projects"), data=request.form).json()
-    print(2)
     if r.get('status') == 'error':
         data = {
             'msg': 'Failed to create new project.'
@@ -185,16 +213,16 @@ def projects():
     projects = r.get('projects')
     for project in projects:
         contributors = []
-        for user_id in project.get("contributors"):
-            r = requests.get(build_url(f"api/users/{str(user_id)}")).json()
-            user_obj = ''
-            if r.get('Status') == 'OK':
-                user_obj = r.get('user')
-                contributors.append(user_obj)
-        project["contributors"] = contributors
+        if project.get('contributors'):
+            for user_id in project.get("contributors"):
+                r = requests.get(build_url(f"api/users/{str(user_id)}")).json()
+                user_obj = ''
+                if r.get('Status') == 'OK':
+                    user_obj = r.get('user')
+                    contributors.append(user_obj)
+            project["contributors"] = contributors
         tech_list = []
         if project.get('tech'):
-            print('tech in here')
             for tech_id in project.get("tech"):
                 r = requests.get(build_url(f"api/tech/{str(tech_id)}")).json()
                 tech_obj = ''
@@ -213,7 +241,6 @@ def users():
         'current_user': current_user,
         'full_view': request.full_view
     }
-    print(build_url('api/users'))
     r = requests.get(build_url('api/users')).json()
     users = r.get('users')   
     if users:
@@ -231,15 +258,13 @@ def users():
 
 @landing.route('/users/<id>/delete', methods=['POST'], strict_slashes=False)
 def delete_account(id):
-    from models.auth import Auth
-    current_user = Auth.get_current_user()
+    response = requests.delete(build_url(f'api/users/{id}')).json()
     data = {
-        'current_user': current_user,
-        'full_view': request.full_view,
-        'msg': 'Account Deleted',
-        'user': ''
+        'msg': response.get('message')
     }
-    return render_template('profile.html', data=data)
+    res = make_response(render_template('login.html', data=data))
+    res.set_cookie('session', '')
+    return res
 
 @landing.route('/users/<id>', methods=['GET', 'POST'], strict_slashes=False)
 def user_profile(id):

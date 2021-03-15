@@ -7,9 +7,9 @@ from models.projects import Project
 
 @api_v1.route('/projects', methods=['GET', 'POST'], strict_slashes=False)
 def all_projects():
-    print('in here')
     if request.method == 'POST':
-        print(3)
+        from models.auth import Auth
+        current_user = Auth.get_current_user()
         f = request.form
         name = f.get('name')
         if Project.get_by_attr('name', name):
@@ -21,13 +21,10 @@ def all_projects():
             'minimal_version': f.get('minimal_version'),
             'stretch_goals': f.get('stretch_goals')
         }
-        print(4)
         new_project = Project(**data)
         new_project.save()
-        print(5)
         return jsonify({'status': 'OK', 'project': new_project.to_dict()}), 200
     projects = Project.get_by_class()
-    print(projects)
     if len(projects) == 0:
         return jsonify({'status': 'error', 'projects': []}), 400
     return jsonify({'status': 'OK', 'projects': projects}), 200
