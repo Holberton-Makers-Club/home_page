@@ -20,35 +20,102 @@
     <div class="card col-sm-12 col-md-6 mx-md-auto justify-content-center py-2">
         <!-- Login Form -->
         <form name="submit_project" id="submit_project_form" method="POST" action="/projects">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Project title">
+            <div id="group-1">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Project title" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea style="resize: none;" rows="5" cols="333" maxlength="333" class="form-control" id="description" name="description" placeholder="1-3 sentences about the general idea." required></textarea>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea style="resize: none;" rows="5" cols="333" maxlength="333" class="form-control" id="description" name="description" placeholder="1-3 sentences about the general idea."></textarea>
+            <div id="group-2">
+                <div hidden>
+                    <h5>Tech Stack</h5>
+                    <div>?? TODO ?? LIST OF CHECKBOXES</div>
+                    <textarea></textarea>
+                </div>
+                <div class="form-group">
+                    <h5>Sprint 0</h5>
+                    <label for="minimal_version">Minimal version</label>
+                    <textarea style="resize: none;" rows="5" cols="333" maxlength="333"  class="form-control" id="minimal_version" name="minimal_version" placeholder="Most fundamental feature(s). Must be possible to build in one sprint. Example: If project is to clone instagram, the sprint 0 version might be one page where any unauthenticated visitor can view and post photos to a feed." required></textarea>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="feature_backlog">Feature Backlog <span class="txt-holb-red">(optional)</span></label>
-                <textarea style="resize: none;" rows="5" cols="333" maxlength="333" class="form-control" id="feature_backlog" name="feature_backlog" placeholder="Long term vision here."></textarea>
-            </div>
-            
-            <h5>Sprint 0</h5>
-            <div class="form-group">
-                <label for="minimal_version">Minimal version</label>
-                <textarea style="resize: none;" rows="5" cols="333" maxlength="333"  class="form-control" id="minimal_version" name="minimal_version" placeholder="Most fundamental feature(s). Must be possible to build in one sprint. Example: If project is to clone instagram, the sprint 0 version might be one page where any unauthenticated visitor can view and post photos to a feed."></textarea>
-            </div>
-            <div class="form-group">
-                <label for="stretch_goals">Stretch goals</label>
-                <textarea style="resize: none;" rows="5" cols="333" maxlength="333"  class="form-control" id="stretch_goals" name="stretch_goals" placeholder="Features that may be possible in the first sprint but are not priorities."></textarea>
+            <div id="group-3">
+                <div class="form-group">
+                    <label for="stretch_goals">Stretch goals</label>
+                    <textarea style="resize: none;" rows="5" cols="333" maxlength="333"  class="form-control" id="stretch_goals" name="stretch_goals" placeholder="Features that may be possible in the first sprint but are not priorities." required></textarea>
+                </div>
+                <div class="form-group" >
+                    <label for="feature_backlog">Feature Backlog <span class="txt-holb-red">(optional)</span></label>
+                    <textarea style="resize: none;" rows="5" cols="333" maxlength="333" class="form-control" id="feature_backlog" name="feature_backlog" placeholder="Long term vision here."></textarea>
+                </div>
             </div>
 
-
             <div class="form-group">
-                <input type="submit" value="SUBMIT PROJECT" class="form-control bg-holb-red text-light font-weight-bold" id="submit-btn">
+                <div class="row px-3">
+                    <button type="button" id="btn-prev" onClick="changeGroup(-1)" class="col-6 form-control bg-holb-red text-light font-weight-bold">Prev</button>
+                    <button type="button" id="btn-next" onClick="changeGroup(1)" class="col-6 form-control bg-holb-red text-light font-weight-bold">Next</button>
+                    <input type="submit" value="SUBMIT PROJECT" class="form-control col-6 bg-holb-red text-light font-weight-bold" id="submit-btn">
+                </div>
             </div>
         </form>
     </div>
+    <script type="application/javascript">
+        let group = 1;
+
+        function validateInput() {
+            document.activeElement.blur();
+            const inputs = $(`#group-${group}`).find('input');
+            const textAreas = $(`#group-${group}`).find('textarea');
+            
+            for (let i = 0; i < inputs.length; i++) {
+                // console.log(index, )
+                let item = inputs[i];
+                if (!item.required) continue;
+                if (item.value === "") return false;
+            }
+
+            for (let i = 0; i < textAreas.length; i++) {
+                let item = textAreas[i];
+                if (!item.required) continue;
+                if (item.value === "") return false;
+            }
+    
+            return true;
+        }
+
+        function changeGroup(step) {
+
+
+            if (step === 1 && !validateInput()) return;
+
+            group += step;
+            group = (group < 1) ? 1 : group;
+            group = (group > 3) ? 3 : group;
+
+            $('[id^="group-"]').hide();
+            $(`#group-${group}`).show();
+            document.activeElement.blur();
+
+            if (group === 3) {
+                $('#btn-next').hide();
+                $('#submit-btn').show();
+            } else {
+                $('#btn-next').show();
+                $('#submit-btn').hide();
+            }
+
+            console.log(group);
+        }
+
+        $(document).ready(() => {
+            $('#group-2').hide();
+            $('#group-3').hide();
+            $('#submit-btn').hide();
+        });
+    </script>
 </section>
 {% else %}
 must be logged in to view this page
