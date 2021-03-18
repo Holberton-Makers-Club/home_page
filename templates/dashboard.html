@@ -51,7 +51,14 @@
             {% for project in projects %}
 
                 <div class="card mt-4 p-2">
-                    <a href="{{ project.link }}"><h3 class="card-title">{{ project.name }}</h3></a>
+                    <div class="row">
+                        <a class="col-10" href="{{ project.link }}"><h3 class="card-title">{{ project.name }}</h3></a>
+                        <span id="edit_{{project.id}}" onClick='displayPopup("{{project.id}}")' class="col-2 text-right">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                            </svg>
+                        </span>
+                    </div>
                     <h5>Description</h5>
                     <p class="card-text text-wrap">
                         {% if project.description %}
@@ -104,6 +111,23 @@
                         {% endif %}
                         {% endif %}
 
+                    <div id=project_popup_{{project.id}} onblur="hideElement(this)" style="display: none;" class="project-popup border rounded" tabindex="0">
+                        <ul class="text-right mr-2 p-0">
+                            <li>
+                                <a href=" ">Assign Roles</a>
+                            </li>  
+                            <li>
+                                <a href=" ">Something</a>
+                            </li>  
+                            <li>
+                                <a href=" ">Edit</a>
+                            </li>  
+                            <li>
+                                <a href=" ">Report</a>
+                            </li>                           
+                        </ul>
+                    </div>
+
             </div>
 
                 
@@ -141,6 +165,18 @@
         </div>
     </section>
 
+<script type="application/javascript">
+    function displayPopup(strID) {
+        const element = $(`#project_popup_${strID}`);        
+        element.show();
+        element.focus();
+    }
+
+    function hideElement(element) {
+        $(`#${element.id}`).hide();
+    }
+</script>
+    
 <!--
 <script>
 
