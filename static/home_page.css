@@ -80,11 +80,12 @@ btn-primary:disabled {
 
 .project-popup {
     position: absolute;
-    right: 1rem;
+    right: 0;
     background-color: white;
-    width: 25%;
+    min-width: 25%;
     max-height: 90%;
     overflow: auto;
+    margin-right: 0.5rem;    
 }
 
 .project-popup::-webkit-scrollbar {
