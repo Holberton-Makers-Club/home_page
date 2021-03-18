@@ -11,6 +11,7 @@ from helpers import build_url
 
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 if "FLASK_SECRET_KEY" in environ:
     app.secret_key = environ["FLASK_SECRET_KEY"]
 else:
