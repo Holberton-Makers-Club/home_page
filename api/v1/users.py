@@ -63,12 +63,6 @@ def update_user_by_id(id):
         user.github = f.get('github')
     if f.get('linkedin'):
         user.linkedin = f.get('linkedin')
-    new_proj = f.get('interested')
-    if new_proj and not new_proj in user.interested:
-            user.interested.append(new_proj)
-    remove_proj = f.get('not-interested')
-    if remove_proj and remove_proj in user.interested:
-            user.interested.remove(remove_proj)
     email = f.get('email')
     password = f.get('password')
     if email:

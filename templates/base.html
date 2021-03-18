@@ -35,21 +35,31 @@
                     </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto d-flex align-items-end">
+                    {% if data %}
+                        {% if data.current_user %}
                         <li class="nav-item">
-                            {% if data %}
-                            {% if data.current_user %}
                             <a class="nav-link" href="{{ url_for('landing.index') }}">Dashboard</a>
-                            {% else %}
-                            <a class="nav-link" href="{{ url_for('landing.index') }}">Mission</a>
-                            {% endif %}
-                            {% endif %}
                         </li>
+                        {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('landing.projects') }}">Gallery</a>
+                                <a class="nav-link" href="{{ url_for('landing.index') }}">Mission</a>
                         </li>
+                        {% endif %}
+
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('landing.users') }}">Makers</a>
+                            <a class="nav-link" href="{{ url_for('projects.projects') }}">Gallery</a>
                         </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('users.users') }}">Makers</a>
+                        </li>
+                        {% if data.current_user %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('users.user_profile', id=data.current_user.id) }}">Profile</a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+
                         
                     </ul>
                 </div>
@@ -84,11 +94,11 @@
         {% if data %}
         {% if data.current_user %}
         <li class="nav-item">
-            <a class="nav-link text-light" href="{{ url_for('landing.logout') }}">Logout</a>
+            <a class="nav-link text-light" href="{{ url_for('auth.logout') }}">Logout</a>
         </li>
         {% else %}
         <li class="nav-item">
-            <a class="nav-link text-light" href="{{ url_for('landing.login_page') }}">Student Portal</a>
+            <a class="nav-link text-light" href="{{ url_for('auth.login_page') }}">Student Portal</a>
         </li>
         {% endif %}
         {% endif %}

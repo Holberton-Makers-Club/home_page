@@ -21,6 +21,10 @@ CORS(app, resources={r"*": {"origins": "*"}})
 # blueprints
 app.register_blueprint(api_v1)
 app.register_blueprint(landing)
+app.register_blueprint(user_routes)
+app.register_blueprint(auth_routes)
+app.register_blueprint(project_routes)
+app.register_blueprint(dashboard_routes)
 
 
 @app.before_request
