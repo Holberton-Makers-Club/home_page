@@ -22,9 +22,22 @@
     {% endif %}
 {% endif %}
 {% if user %}
+
+<!-- QUOTE -->
+{% if data.quote %}
+    <section class="container col-sm-12 col-md-10  mb-4">
+        <div class=" text-center py-4">
+            <p>{{data.quote.text}}</p>
+            - {{data.quote.author}}
+            {% endif %}
+        </div>
+    </section>
+
+
+
     <!-- current_user Profile -->
-    <section class="container col-sm-10 col-md-8 col-lg-6 mb-4">
-        <div class="container text-center py-4">
+    <section class="container col-sm-12 col-md-10  mb-4">
+        <div class=" text-center py-4">
             <h1>{{ user.firstname }} {{ user.lastname }}</h1>
             <h6 class="card-subtitle text-muted">{{ user.title }}</h6>
             {% if user.github %}
@@ -52,8 +65,8 @@
 
 <!-- if signed in and viewing your own page -->
 {% if current_user %}
-<section class="container justify-content-center mb-4">
-<div class="card col-sm-12 col-md-6 mx-md-auto justify-content-center py-2">
+<section class="container col-sm-12 col-md-6 col-lg-4  justify-content-center mb-4">
+<div class="card mx-md-auto justify-content-center p-2">
     <h4>Edit</h4>
     <form action="/users/{{current_user.id}}" name="edit_profile_form" id="edit_profile_form" method="POST">
         <div class="form-group">

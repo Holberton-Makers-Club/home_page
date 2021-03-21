@@ -14,41 +14,105 @@
 
 
 
-</section>
-
-
 
 <!-- projects section -->    
-    <section class="container justify-content-center mb-4"  id="projects">
+    <section class="container col-sm-12 col-md-10 justify-content-center mb-4"  id="projects">
         <div class="container">
         <h1 class="py-4 text-center" id="title">Dashboard</h1>
-    </div>
-        <div class="col-sm-12 col-md-6 mx-md-auto justify-content-center py-2">
+        </div>
+        <div class="container mx-md-auto justify-content-center ">
+
+            {% if data.current_project %}
+            {% set project = data.current_project %}
+            
+            <h3 class="txt-holb-red my-0">Current Project</h3>
+            <div class="card mb-4 p-2 bg-holb-red text-light">
+                <a href="{{ project.link }}"><h3 class="card-title text-light">{{ project.name }}</h3></a>
+                <h5>Description</h5>
+                Willing participants: {{project.participant_count}}
+                <p class="card-text text-wrap">
+                    {% if project.description %}
+                    {{ project.description }}
+                    
+                    {% endif %}
+                </p>
+                <details>
+                    <summary class="my-2">See more</summary>
+                    {% if project.feature_backlog %}
+                    <h5>Feature backlog:</h5>
+                    <p class="card-text text-wrap">
+                        {{ project.feature_backlog }}
+                    </p>
+                    {% endif%}
+
+                    {% if project.minimal_version %}
+                    <h5>Minimal version:</h5>
+                    <p class="card-text text-wrap">
+                        {{ project.minimal_version }}
+                    </p>
+                    {% endif%}
+
+                    {% if project.stretch_goals %}
+                    <h5>Stretch goals:</h5>
+                    <p class="card-text text-wrap">
+                        {{ project.stretch_goals }}
+                    </p>
+                    {% endif%}
+
+                </details>
+                <h3>Product owner</h3>
+                <h5>
+                    {% if project.owner_name %}
+                        {{ project.owner_name }}
+                    {% endif %}
+                </h5>
+                <h3>Google meet room </h3>
+                <a class="text-warning text-decoration-underlined" href="https://meet.google.com/dyx-xibr-fvy" target="_blank">
+                    https://meet.google.com/dyx-xibr-fvy
+                </a>
+                {% if current_user.staff %}
+                <form action="/projects/{{project.id}}" method="POST" name="assign-product-owner">
+                    
+                    <div class="form-group">
+                        <select name="owner" id="owner">
+                            {% for user in data.users %}
+                            <option>{{user.name}}:{{user.id}}
+                                {% if user.staff %}
+                                - staff
+                                {% endif %}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" class="btn-secondary">
+                    </div>
+                </form>
+                {% endif %}
+                </div>
+                    {% endif %}
 
 
-
-
-            <a class="" href="{{ url_for('landing.submit_project_page') }}">
-                <button href="{{ url_for('landing.submit_project_page') }}" type="submit" class="font-weight-bold text-light btn bg-dark mb-4">NEW PROJECT</button>
+            <a class="" href="{{ url_for('projects.submit_project_page') }}">
+                <button href="{{ url_for('projects.submit_project_page') }}" type="submit" class="font-weight-bold text-light btn bg-dark mb-4">NEW PROPOSAL</button>
             </a>
             
             
             <!-- search bar -->
             <div class="mx-auto col-12 my-2 py-0" style="padding-left:0!important; padding-right:0!important;">
                 <form class="form-inline" action="/projects/search" method="POST">
-                    <label class="sr-only" for="searchBar">Search by project name</label>
+                    <label class="sr-only" for="searchBar">Search by proposal name</label>
                     <input type="text" class="form-control mb-2 col mr-md-2" id="searchBar" name="searchBar" placeholder="Enter Search">
                     <button type="submit" class="btn btn-primary mb-2 col-12 col-md-2">Search</button>
                 </form>
+            </div>
 
             {% if msg %}
             <span class="btn-alert">{{ msg }}</span>
             {% endif %}
             
 
-            {% if projects %}
+            {% if data.projects %}
         
-            {% for project in projects %}
+            {% for project in data.projects %}
 
                 <div class="card mt-4 p-2">
                     <div class="d-flex justify-content-between">
@@ -60,6 +124,8 @@
                         </span>
                     </div>
                     <h5>Description</h5>
+                    Willing participants: {{project.participant_count}}
+                    
                     <p class="card-text text-wrap">
                         {% if project.description %}
                         {{ project.description }}
@@ -91,10 +157,10 @@
 
                     </details>
 
-                    {% if current_user.interested %}
-                        {% if project.id in current_user.interested %}
+                        {% if data.load_buttons %}
+                        {% if current_user.id in project.interested %}
                         <!--remove interest form here-->
-                        <form class="mt-4" action="/revoke-interest/{{project.id}}" name="revoke-interest-form" id="revoke-interest{{project.id}}" method="POST">
+                        <form class="mt-4" action="{{ url_for('dash.revoke_interest', project_id=project.id) }}" name="revoke-interest-form" id="revoke-interest{{project.id}}" method="POST">
                             <div class="form-group">
                                 <input type="submit" name="revoke-interested" value="revoke interest" class="btn-primary btn">
                             </div>
@@ -102,12 +168,11 @@
 
                         {% else %}
 
-                        <form class="mt-4" action="/express-interest/{{project.id}}" name="express-interest-form" id="express-interest{{project.id}}" method="POST">
+                        <form class="mt-4" action="{{ url_for('dash.express_interest', project_id=project.id) }}" name="express-interest-form" id="express-interest{{project.id}}" method="POST">
                             <div class="form-group">
                                 <input type="submit" name="express-interest" value="express interest" class="interested btn">
                             </div>
                         </form>
-
                         {% endif %}
                         {% endif %}
 
@@ -129,6 +194,7 @@
                     </div>
 
             </div>
+                </div>
 
                 
                     <!--
@@ -162,7 +228,6 @@
 
             {% endif %}
             </div>
-        </div>
     </section>
 
 <script type="application/javascript">

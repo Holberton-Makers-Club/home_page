@@ -51,3 +51,28 @@ def project_by_id(id):
             return jsonify({'status': 'OK', 'project': project}), 200
     return jsonify({'status': 'error', 'project': {}}), 400
 
+
+@api_v1.route('/projects/<id>', methods=['PUT'], strict_slashes=False)
+def update_project_by_id(id):
+    project = Project.get_by_id(id)
+    if not project:
+        return jsonify({
+            'status': 'error',
+            'message': 'project could not be updated'
+            }), 400
+    f = request.form
+    project = Project(**project)
+    interested = f.get('interested')
+    not_interested = f.get('not-interested')
+    if f.get('owner'):
+        owner_name, owner_id = f.get('owner').split(':')
+        project.owner_name = owner_name
+        project.owner_id = owner_id
+    if not interested in project.interested:
+        project.interested.append(interested)
+    if not_interested in project.interested:
+        project.interested.remove(not_interested)
+    project.save()
+    return jsonify({
+        'status': 'OK', 'project': project.to_dict()
+        }), 200

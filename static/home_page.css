@@ -4,6 +4,7 @@
     border: 1px solid #be0037;
     color: white;
 }
+
 btn-primary:disabled {
     border: 3px solid red;
 }
@@ -24,6 +25,7 @@ btn-primary:disabled {
 .btn-alert {
     color: #be0037;
 }
+
 /* 
 @media only screen and (max-width: 768px) {
 
