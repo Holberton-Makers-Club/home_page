@@ -94,7 +94,9 @@
                 </form>
                 {% endif %}
                 </div>
+        </div>
                     {% endif %}
+                    
 
 
             <a class="" href="{{ url_for('projects.submit_project_page') }}">
@@ -121,7 +123,14 @@
             {% for project in data.projects %}
 
                 <div class="card mt-4 p-2">
-                    <a href="{{ project.link }}"><h3 class="card-title">{{ project.name }}</h3></a>
+                    <div class="d-flex justify-content-between">
+                        <a class="" href="{{ project.link }}"><h3 class="card-title">{{ project.name }}</h3></a>
+                        <span id="edit_{{project.id}}" onClick='displayPopup("{{project.id}}")' class="text-right">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                            </svg>
+                        </span>
+                    </div>
                     <h5>Description</h5>
                     Willing participants: {{project.participant_count}}
                     
@@ -180,7 +189,24 @@
                         {% endif %}
                         {% endif %}
 
-                </div>
+                    <div id=project_popup_{{project.id}} onblur="hideElement(this)" style="display: none;" class="project-popup border rounded pl-2" tabindex="0">
+                        <ul class="text-right mr-2 p-0">
+                            <li>
+                                <a href=" ">Assign Roles</a>
+                            </li>  
+                            <li>
+                                <a href=" ">Something</a>
+                            </li>  
+                            <li>
+                                <a href=" ">Edit</a>
+                            </li>  
+                            <li>
+                                <a href=" ">Report</a>
+                            </li>                           
+                        </ul>
+                    </div>
+
+            </div>
 
                 
                     <!--
@@ -211,11 +237,24 @@
 
                 <hr class="my-4">
             {% endfor %}
+                </div>
 
             {% endif %}
             </div>
     </section>
 
+<script type="application/javascript">
+    function displayPopup(strID) {
+        const element = $(`#project_popup_${strID}`);        
+        element.show();
+        element.focus();
+    }
+
+    function hideElement(element) {
+        $(`#${element.id}`).hide();
+    }
+</script>
+    
 <!--
 <script>
 

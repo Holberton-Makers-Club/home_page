@@ -27,6 +27,15 @@ def submit_project():
     response = requests.put(build_url(f'api/projects/{project_id}'), data={'interested': current_user.get("id")}).json()
     return redirect(url_for('dash.dashboard'))
 
+@project_routes.route('/edit', methods=['GET', 'POST'], strict_slashes=False)
+def edit_project():
+    data, current_user = set_data_and_current_user()
+    data["api_url"] = build_url('api/')
+    data["roles"] = ['role1', 'role2', 'role3', 'role4']
+    r = requests.get(build_url('api/projects')).json()
+    projects = r.get('projects')
+    return render_template('edit_project.html', data=data, projects=projects)
+
 @project_routes.route('/<id>', methods=['POST'], strict_slashes=False)
 def modify_project(id):
     data, current_user = set_data_and_current_user()
