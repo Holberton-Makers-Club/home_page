@@ -1,7 +1,4 @@
-<!doctype html>
 
-<html lang="en">
-<head>
 {% extends 'base.html' %}
 
 {% block head %}
@@ -11,14 +8,14 @@
 {% block content %}
 <section class="container justify-content-center mb-4">
     <div class="container">
-            <h1 class="py-4 text-center">Members</h1>
+            <h1 class="py-4 text-center">Makers</h1>
     </div>
     <div class="card-columns">
         {% for user in users %}
         <div class="card">
             <div class="card-body">
                 <a href="/users/{{ user.id }}">
-                    <h4 class="card-title">{{ user.firstname }} {{ user.lastname }}</h4>
+                    <h4 class="card-title">{{ user.name }}</h4>
                 </a>
                 <h6 class="card-subtitle mb-2 text-muted">{{ user.title }}</h6>
                 <a href="{{ user.github }}" class="">

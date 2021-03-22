@@ -52,10 +52,6 @@ def user_profile(id):
         user = Auth.get_current_user()
     data = display_user_with_projects(request, user)
     if request.method == 'GET':
-        if request.current_user:
-            r = requests.get(build_url('/api/quotes')).json()
-            import random
-            data['quote'] = random.choice(r.get('quotes'))        
         return render_template('profile.html', data=data)
     # UPDATE users profile
     if request.method == 'POST':
@@ -64,7 +60,7 @@ def user_profile(id):
             data['msg'] = response.get('message')
             return render_template('profile.html', data=data)
         # do the update here
-        return redirect(url_for('landing.user_profile', id=id))
+        return redirect(url_for('users.user_profile', id=id))
 
 def display_user_with_projects(request, user):
     from models.auth import Auth

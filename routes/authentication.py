@@ -18,6 +18,11 @@ def login_page():
         'current_user': current_user,
         'full_view': request.full_view,
     }
+    r = requests.get(build_url('/api/quotes')).json()
+    import random
+    print('****** IN HERE')
+    data['quote'] = random.choice(r.get('quotes')) 
+    print(data['quote'])  
     return render_template('login.html', data=data)
 
 @auth_routes.route('/login', methods=['POST'], strict_slashes=False)
