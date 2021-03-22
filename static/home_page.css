@@ -55,6 +55,10 @@ btn-primary:disabled {
 .txt-holb-red {
     color: #be0037;
 }
+.j {
+    background-color: black;
+    color: white;
+}
 .danger:hover {
     border: 2px solid #EB0045;
 }

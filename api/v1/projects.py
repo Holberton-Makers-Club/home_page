@@ -16,7 +16,7 @@ def all_projects():
             return jsonify({'status': 'error', 'project': ''}), 400
         data = {
             'name': f.get('name'),
-            'description': f.get('description'),
+            'call_to_action': f.get('call_to_action'),
             'feature_backlog': f.get('feature_backlog'),
             'minimal_version': f.get('minimal_version'),
             'stretch_goals': f.get('stretch_goals')

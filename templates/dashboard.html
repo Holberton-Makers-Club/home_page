@@ -28,11 +28,11 @@
             <h3 class="txt-holb-red my-0">Current Project</h3>
             <div class="card mb-4 p-2 bg-holb-red text-light">
                 <a href="{{ project.link }}"><h3 class="card-title text-light">{{ project.name }}</h3></a>
-                <h5>Description</h5>
                 Contributors: {% for contributor in project.contributors %}{{contributor.name}}{% endfor %}
+                <h5>Call to Action</h5>
                 <p class="card-text text-wrap">
-                    {% if project.description %}
-                    {{ project.description }}
+                    {% if project.call_to_action %}
+                    {{ project.call_to_action }}
                     
                     {% endif %}
                 </p>
@@ -40,8 +40,8 @@
                     <summary class="my-2">See more</summary>
 
                     {% if project.minimal_version %}
-                    <h5>Minimal version:</h5>
-                    <p class="card-text text-wrap">
+                    <h5 >Minimal version:</h5>
+                    <p class="card-text text-wrap font-weight-bold">
                         {{ project.minimal_version }}
                     </p>
                     {% endif%}
@@ -72,10 +72,7 @@
                         {{ project.owner_name }}
                     {% endif %}
                 </h5>
-                <h3>Google meet room </h3>
-                <a class="text-warning text-decoration-underlined" href="https://meet.google.com/dyx-xibr-fvy" target="_blank">
-                    https://meet.google.com/dyx-xibr-fvy
-                </a>
+
                 {% if current_user.staff %}
                 <form action="/projects/{{project.id}}" method="POST" name="assign-product-owner">
                     
@@ -93,9 +90,14 @@
                     </div>
                 </form>
                 {% endif %}
+
+                <h3>Google meet room </h3>
+                <a class="text-warning text-decoration-underlined" href="https://meet.google.com/dyx-xibr-fvy" target="_blank">
+                    https://meet.google.com/dyx-xibr-fvy
+                </a>
+                
                 </div>
-        </div>
-                    {% endif %}
+            {% endif %}
                     
 
 
@@ -124,19 +126,24 @@
 
                 <div class="card mt-4 p-2">
                     <div class="d-flex justify-content-between">
-                        <a class="" href="{{ project.link }}"><h3 class="card-title">{{ project.name }}</h3></a>
+                        <header  class="mb-2">
+                            <a class="" href="{{ project.link }}"><h3 class="card-title mb-0">{{ project.name }}</h3></a>
+                            Willing participants: {{project.participant_count}}
+                        </header>
+                        
+                        
+                        
                         <span id="edit_{{project.id}}" onClick='displayPopup("{{project.id}}")' class="text-right">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                                 <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
                             </svg>
                         </span>
                     </div>
-                    <h5>Description</h5>
-                    Willing participants: {{project.participant_count}}
                     
+                    <h5>Call to Action</h5>
                     <p class="card-text text-wrap">
-                        {% if project.description %}
-                        {{ project.description }}
+                        {% if project.call_to_action %}
+                        {{ project.call_to_action }}
                         
                         {% endif %}
                     </p>
@@ -144,8 +151,8 @@
                         <summary class="my-2">See more</summary>
 
                         {% if project.minimal_version %}
-                        <h5>Minimal version:</h5>
-                        <p class="card-text text-wrap">
+                        <h5 class="txt-holb-red">Minimal version:</h5>
+                        <p class="card-text text-wrap font-weight-bold">
                             {{ project.minimal_version }}
                         </p>
                         {% endif%}
@@ -240,7 +247,8 @@
                 </div>
 
             {% endif %}
-            </div>
+
+
     </section>
 
 <script type="application/javascript">
