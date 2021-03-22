@@ -1,0 +1,189 @@
+
+{% extends 'base.html' %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<section class="container col-sm-12 col-md-6 justify-content-center mb-4" id="projects">
+    <div class=" mb-5">
+        <h1 class="py-4 text-center" id="title">Documentation</h1>
+        <div class="group-1">
+            <p class="text-muted  h4 text-center">
+                Focus on bringing value to the user.
+                <details class="text-muted text-center">
+                <summary>See example...</summary>
+                <p>
+                    <h6>As an employer</h6>
+                </p>
+                <p>
+                    <h6>I want to find Makers Club participants with very specific technical experience</h6>
+                </p>
+                <p>
+                    <h6>So I can reduce my onboarding costs by hiring those who require the least amount of training.</h6>
+                </p>
+            </details>
+            </p>
+            
+        </div>
+        <div class="group-2">
+            <p class="text-muted container h4 text-center">
+                Do as little as possible.
+            </p>
+            
+        </div>
+        <div class="group-3">
+            <p class="text-muted container h4 text-center">
+                Simple but working > fully featured but not.
+            </p>
+        </div>
+    </div>
+    
+    <div class="card p-2">
+        <!-- Login Form -->
+
+
+
+
+        <!--
+            EMPHASIZE THAT USER STORIES ARE NOT INHERINTLY USEFUL
+            THEY ARE ONLY A TOOL
+            THEY ARE NOT ALWAYS THE RIGHT TOOL
+
+            ADD ALTERNATIVES IN THE FUTURE
+        -->
+
+
+
+
+
+        <form name="login" id="login_form" method="POST" action="{{ url_for('auth.login_form_submit') }}">
+            <header class="pb-4">
+                
+
+            </header>
+            <div class="group-1">
+                <div class="form-group">
+                    <label for="story-who-0">AS A </label><span class="txt-holb-red">*</span>
+                    <input required maxlength="99"  type="text" class="form-control" id="story-who-0" name="story-who-0">
+                </div>
+
+                <div class="form-group">
+                    <label for="story-what-0">I WANT TO </label><span class="txt-holb-red">*</span>
+                    <input required maxlength="99"  type="text" class="form-control" id="story-what-0" name="story-what-0">
+                </div>
+
+                <div class="form-group">
+                    <label for="story-why-0">SO THAT I CAN </label><span class="txt-holb-red">*</span>
+                    <input required maxlength="99" type="text" class="form-control" id="story-why-0" name="story-why-0">
+                </div>
+                
+            </div>
+
+            <div class="group-2">
+                <!--
+                    Frontend
+                File path/names for templates
+                To which route does the template correspond?
+                Does the template request any information directly from the API?
+                Link to the API documentation for that endpoint.
+                Describe how it should be displayed in the template.
+                What data will those templates receive, if any.
+                Variable names/structure/types/hierarchy
+                Links between templates and which routes they correspond to.
+
+
+
+                RETHINK THIS WHOLE FORM. SHOULD SHOW THE FULL LIST AT FIRST, STORIES, ROUTES, ENPOINTS, ETC. AND ALLOW YOU TO ADD MORE TO EACH, THEN POPULATE AS EACH INDIVIDUAL THING IS DONE OR MAYBE THERE'S A BUTTON FOR 'GO LIVE'
+                -->
+                <div class="form-group">
+                    <label for="story-why-0">SO THAT I CAN </label><span class="txt-holb-red">*</span>
+                    <input required maxlength="99" type="text" class="form-control" id="story-why-0" name="story-why-0">
+                </div>
+
+                
+            </div>
+            
+            <div class="form-group">
+                <div class="row px-3 justify-content-between">
+                    <button type="button" id="btn-prev" onClick="changeGroup(-1)" class="mr-md-1 col-md-3 form-control btn-primary bg-holb-red text-light font-weight-bold">Prev</button>
+                    <button type="button" id="btn-next" onClick="changeGroup(1)" class="ml-md-1 col-md-3 form-control btn-primary bg-holb-red text-light font-weight-bold">Next</button>
+                    <input type="submit" onclick="sub()" value="SUBMIT" class="ml-md-1 col-sm-5 col-md-3 form-control btn-primary bg-holb-red text-light font-weight-bold" id="submit-btn">
+                </div>
+            </div>
+        </form>
+    </div>
+</section> 
+
+
+    <script type="application/javascript">
+        let group = 1;
+
+        function validateInput() {
+            document.activeElement.blur();
+            const inputs = $(`.group-${group}`).find('input');
+            const textAreas = $(`.group-${group}`).find('textarea');
+            
+            for (let i = 0; i < inputs.length; i++) {
+                // console.log(index, )
+                let item = inputs[i];
+                if (!item.required) continue;
+                if (item.value === "") return false;
+            }
+
+            for (let i = 0; i < textAreas.length; i++) {
+                let item = textAreas[i];
+                if (!item.required) continue;
+                if (item.value === "") return false;
+            }
+    
+            return true;
+        }
+
+        function changeGroup(step) {
+
+
+            if (step === 1 && !validateInput()) return;
+
+            group += step;
+            group = (group < 1) ? 1 : group;
+            group = (group > 3) ? 3 : group;
+
+            $('[class^="group-"]').hide();
+            $(`.group-${group}`).show();
+            document.activeElement.blur();
+
+            if (group === 3) {
+                $('#btn-next').hide();
+                $('#submit-btn').show();
+            } else {
+                $('#btn-next').show();
+                $('#submit-btn').hide();
+            }
+
+            console.log(group);
+        }
+
+        $(document).ready(() => {
+            $('.group-2').hide();
+            $('.group-3').hide();
+            $('#submit-btn').hide();
+        });
+
+        let x = false;
+        function sub() {
+            x = true;
+        }
+        window.onbeforeunload = function(e) {
+            if (x) {
+                return
+            }
+            return "Do you want to exit this page?";
+        };
+
+    </script>
+
+
+{% endblock %}

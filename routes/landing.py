@@ -15,3 +15,9 @@ def index():
         return redirect(url_for('dash.dashboard'))
     return render_template('index.html', data=data)
 
+
+@landing.route('/docs', methods=['GET'], strict_slashes=False)
+@fully_private_route
+def docs():
+    data, current_user = set_data_and_current_user()
+    return render_template('documentation_form.html', data=data)
