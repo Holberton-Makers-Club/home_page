@@ -18,8 +18,7 @@ def create_user():
     if User.get_by_attr('email', email):
         return jsonify({'status': 'error', 'user': ''}), 400
     data = {
-        'firstname': f.get('firstname'),
-        'lastname': f.get('lastname'),
+        'name': f.get('name'),
         'email': email,
         'password': f.get('password')
     }
@@ -51,10 +50,8 @@ def update_user_by_id(id):
             }), 400
     f = request.form
     user = User(**user)
-    if f.get('firstname'):
-        user.firstname = f.get('firstname')
-    if f.get('lastname'):
-        user.lastname = f.get('lastname')
+    if f.get('name'):
+        user.name = f.get('name')
     if f.get('title'):
         user.title = f.get('title')
     if f.get('bio'):
