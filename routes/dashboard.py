@@ -23,14 +23,17 @@ def trigger_current_project(data):
         project = Project(**project_dict)
         # make sure there's only one current project by resetting them all to inactive
         project.active = False
+        
         project.save()
         data, project_dict = fill_and_count_participants(data, project_dict)
         if project_dict.get('participant_count') > most_participants:
+            if hasattr(project, 'contributors'):
+                project.contributors = []            
             most_participants = project_dict.get('participant_count')
-            current_project = project_dict
+            project.contributors = project_dict['participants']
             project.active = True
             project.save()    
-            data['current_project'] = current_project                
+            data['current_project'] = project_dict                
 
     return data
 
@@ -68,6 +71,8 @@ def dashboard():
             data, project_dict = fill_and_count_participants(data, project_dict)
             projects_list.append(project_dict)
             if project_dict.get('active'):
+                if not project_dict.get('contributors'):
+                    project_dict['contributors'] = project_dict['participants']
                 data['current_project'] = project_dict
         data['projects'] = projects_list
             

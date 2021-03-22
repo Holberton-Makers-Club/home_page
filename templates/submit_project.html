@@ -54,14 +54,15 @@
             </div>
 
             <div class="form-group">
-                <div class="row px-3">
-                    <button type="button" id="btn-prev" onClick="changeGroup(-1)" class="col-6 form-control btn-primary bg-holb-red text-light font-weight-bold">Prev</button>
-                    <button type="button" id="btn-next" onClick="changeGroup(1)" class="col-6 form-control btn-primary bg-holb-red text-light font-weight-bold">Next</button>
-                    <input type="submit" value="SUBMIT PROPOSAL" class="form-control btn-primary col-6 bg-holb-red text-light font-weight-bold" id="submit-btn">
+                <div class="row px-3  justify-content-between">
+                    <button type="button" id="btn-prev" onClick="changeGroup(-1)" class="mr-md-1 col-md-3  form-control btn-primary bg-holb-red text-light font-weight-bold">Prev</button>
+                    <button type="button" id="btn-next" onClick="changeGroup(1)" class="ml-md-1 col-md-3  form-control btn-primary bg-holb-red text-light font-weight-bold">Next</button>
+                    <input type="submit" onclick="sub()" value="SUBMIT" class="ml-md-1 col-md-3 form-control btn-primary bg-holb-red text-light font-weight-bold text-center" id="submit-btn">
                 </div>
             </div>
         </form>
     </div>
+    
     <script type="application/javascript">
         let group = 1;
 
@@ -115,6 +116,17 @@
             $('#group-3').hide();
             $('#submit-btn').hide();
         });
+
+        let x = false;
+        function sub() {
+            x = true;
+        }
+        window.onbeforeunload = function(e) {
+            if (x) {
+                return
+            }
+            return "Are you sure you want to leave this page incomplete?";
+        };
     </script>
 </section>
 {% else %}
