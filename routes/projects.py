@@ -109,7 +109,7 @@ def search():
 def assign_roles():
     data, current_user = set_data_and_current_user()
     data["api_url"] = build_url('api/')
-    data["roles"] = ['role1', 'role2', 'role3', 'role4']
+    data["roles"] = ['Role1', 'Role2', 'Role3', 'Role4']
     r = requests.get(build_url('api/projects')).json()
     projects, active = r.get("projects"), None
     r = requests.get(build_url('api/users')).json()
