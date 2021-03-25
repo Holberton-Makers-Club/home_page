@@ -104,3 +104,22 @@ def search():
         msg = f'{query} not found'
     # pub_data, auth_data, my_auth_data, my_role_auth_data
     return render_template('gallery.html', projects=matches, msg=msg, data=data)
+
+@project_routes.route('/assign_roles', methods=['GET', 'POST'], strict_slashes=False)
+def assign_roles():
+    data, current_user = set_data_and_current_user()
+    data["api_url"] = build_url('api/')
+    data["roles"] = ['Role1', 'Role2', 'Role3', 'Role4']
+    r = requests.get(build_url('api/projects')).json()
+    projects, active = r.get("projects"), None
+    r = requests.get(build_url('api/users')).json()
+    data["users"] = r.get('users')    
+    for project in projects:
+        if project["active"]:
+            active = project
+            break
+
+    if "127.0.0.1" in data["api_url"]:
+        active = projects[0]
+
+    return render_template('assign_roles.html', data=data, project=active)

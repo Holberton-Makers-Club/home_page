@@ -199,11 +199,8 @@
                     <div id=project_popup_{{project.id}} onblur="hideElement(this)" style="display: none;" class="project-popup border rounded pl-2" tabindex="0">
                         <ul class="text-right mr-2 p-0">
                             <li>
-                                <a href=" ">Assign Roles</a>
-                            </li>  
-                            <li>
-                                <a href=" ">Something</a>
-                            </li>  
+                                <a href="{{ url_for('projects.assign_roles') }}">Assign Roles</a>
+                            </li>
                             <li>
                                 <a href=" ">Edit</a>
                             </li>  
@@ -259,8 +256,13 @@
     }
 
     function hideElement(element) {
-        $(`#${element.id}`).hide();
+        setTimeout(() => {
+            $(`#${element.id}`).hide();
+        }, 50);        
     }
+
+    $()
+
 </script>
     
 <!--
