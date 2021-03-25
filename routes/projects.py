@@ -105,11 +105,11 @@ def search():
     # pub_data, auth_data, my_auth_data, my_role_auth_data
     return render_template('gallery.html', projects=matches, msg=msg, data=data)
 
-@project_routes.route('/assign_roles', methods=['GET', 'POST'], strict_slashes=False)
+@project_routes.route('<id>/assign_roles', methods=['GET', 'POST'], strict_slashes=False)
 def assign_roles():
     data, current_user = set_data_and_current_user()
     data["api_url"] = build_url('api/')
-    data["roles"] = ['role1', 'role2', 'role3', 'role4']
+    data["teams"] = ['documentation', 'front_end', 'back_end', 'role4']
     r = requests.get(build_url('api/projects')).json()
     projects, active = r.get("projects"), None
     r = requests.get(build_url('api/users')).json()
