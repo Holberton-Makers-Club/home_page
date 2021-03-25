@@ -1,7 +1,4 @@
-<!doctype html>
 
-<html lang="en">
-<head>
 {% extends 'base.html' %}
 
 {% block head %}
@@ -22,10 +19,14 @@
     {% endif %}
 {% endif %}
 {% if user %}
+
+
+
+
     <!-- current_user Profile -->
-    <section class="container col-sm-10 col-md-8 col-lg-6 mb-4">
-        <div class="container text-center py-4">
-            <h1>{{ user.firstname }} {{ user.lastname }}</h1>
+    <section class="container col-sm-12 col-md-10  mb-4">
+        <div class=" text-center py-4">
+            <h1>{{ user.name }}</h1>
             <h6 class="card-subtitle text-muted">{{ user.title }}</h6>
             {% if user.github %}
             <a href="{{ user.github }}" ">
@@ -52,41 +53,37 @@
 
 <!-- if signed in and viewing your own page -->
 {% if current_user %}
-<section class="container justify-content-center mb-4">
-<div class="card col-sm-12 col-md-6 mx-md-auto justify-content-center py-2">
+<section class="container col-sm-12 col-md-6 col-lg-4  justify-content-center mb-4">
+<div class="card mx-md-auto justify-content-center p-2">
     <h4>Edit</h4>
-    <form action="/users/{{current_user.id}}" name="edit_profile_form" id="edit_profile_form" method="POST">
+    <form action="{{ url_for('users.user_profile', id=current_user.id)}}" name="edit_profile_form" id="edit_profile_form" method="POST">
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="{{current_user.email}}">
+            <input type="email" class="form-control" id="email" name="email" value="{{current_user.email}}">
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="{% for char in current_user.password %}*{% endfor %}">
+            <input type="password" class="form-control" id="password" name="password" value="{% for char in current_user.password %}*{% endfor %}">
         </div>
         <div class="form-group">
-            <label for="firstname">First Name</label>
-            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="{{current_user.firstname}}">
-        </div>
-        <div class="form-group">
-            <label for="lastname">Last Name</label>
-            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="{{current_user.lastname}}">
+            <label for="name">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{current_user.name}}">
         </div>
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="{{current_user.title}}">
+            <input type="text" class="form-control" id="title" name="title" value="{{current_user.title}}">
         </div>
         <div class="form-group">
             <label for="github">Github</label>
-            <input type="url" class="form-control" id="github" name="github" placeholder="{{current_user.github}}">
+            <input type="url" class="form-control" id="github" name="github" value="{{current_user.github}}">
         </div>
         <div class="form-group">
             <label for="linkedin">LinkedIn</label>
-            <input type="url" class="form-control" id="linkedin" name="linkedin" placeholder="{{current_user.linkedin}}">
+            <input type="url" class="form-control" id="linkedin" name="linkedin" value="{{current_user.linkedin}}">
         </div>
         <div class="form-group">
             <label for="bio">About me</label>
-            <textarea maxlength="333" rows="5" class="form-control" id="bio" name="bio" placeholder="{{current_user.bio}}"></textarea>
+            <textarea maxlength="333" rows="5" class="form-control" id="bio" name="bio" value="{{current_user.bio}}"></textarea>
         </div>
         <div class="form-group">
             <input type="submit" value="UPDATE PROFILE" class="form-control bg-holb-red text-light font-weight-bold">
@@ -96,7 +93,6 @@
 </div>
 </section>
 {% endif %}
-
 
     <!-- user Projects -->
     {% if user.projects %}
@@ -127,13 +123,15 @@
         </div>  
         
     </section>  
+    {% endif %}
 
+    
         {% if current_user %}
 <hr>
     <section class="container mt-5">
         <div class="card col-sm-12 col-md-6 mx-md-auto justify-content-center alert alert-danger text-center">
             <h3>** Danger Zone **</h3>
-            <form action="/users/{{current_user.id}}/delete" name="delete_profile" id="delete_profile" method="POST">
+            <form action="{{ url_for('users.delete_account', id=current_user.id )}}" name="delete_profile" id="delete_profile" method="POST">
                 <div class="form-group">
                     <input type="submit" value="DELETE ACCOUNT" class="danger form-control text-dark font-weight-bold">
                 </div>
@@ -142,7 +140,6 @@
     </section>
         {% endif %}
     
-    {% endif %}
 
 {% else %}
 

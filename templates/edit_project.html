@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+
+
+{% if data.current_user %}
+{% set current_user = data.current_user %}
+
+<!-- projects section -->    
+    <section class="row">
+        <div class="container col-2 m-0 border">
+            {% if projects %}
+            <ul class="pl-2">
+                {% for project in projects %}
+                <li class="my-5" onclick='populate_form("{{project.id}}", "{{data.api_url}}")'>{{project.name}}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="col-10 border">
+            <form id="edit_project" class="container my-2 row">
+                <p id="project_id" hidden></p>
+                
+                <div class="form-group col-12 row pr-0">
+                    <label class="col-4">Name</label>
+                    <!-- TODO: Must only be visable to staff -->
+                    <button type="button" id="btn_edit" onclick="toggleForm(this.id)" class="col-2 offset-6 btn-primary rounded">Assign Roles</button>
+                    <h4 class="col-12" id="project_name"></h4>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="">Description</label>
+                    <textarea class="col-12" id="project_desc"></textarea>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="">Feature Backlog</label>
+                    <textarea class="col-12" id="project_backlog"></textarea>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="">Minimal Version</label>
+                    <textarea class="col-12" id="project_mvp"></textarea>    
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="">Stretch Goals</label>
+                    <textarea class="col-12" id="project_goals"></textarea>
+                </div>
+                <div class="form-group col-12">
+                    <!-- Display submit button if current user is project owner -->                    
+                    <input type="submit" value="SUBMIT CHANGES" class="form-control btn-primary col-6 offset-6 text-light font-weight-bold" id="submit-btn">
+                </div>
+            </form>
+            <form style="display: none;" id="assign_roles" class="container my-2 row">
+                <div class="form-group col-12 row pr-0">
+                    <label class="col-4">Name</label>
+                    <!-- TODO: Must only be visable to staff -->
+                    <button type="button" id="btn_roles" onclick="toggleForm(this.id)" class="col-2 offset-6 btn-primary rounded">Confirm Roles</button>
+                    <h4 class="col-12" id="project_name"></h4>
+                </div>
+                {% if data.roles %}
+                {% for role in data.roles %}
+                
+                <div class="col-6">
+                    <h6>{{role}}</h6>
+                    <div class="form-group">
+                        <label>Driver</label>
+                        <select>
+                        </select>
+                    </div>
+                    <div id="team_list_{{role}}" class="row pr-3">
+                        <p class="col-12">Team</p>
+                    </div>
+                </div>
+
+                {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+    </section>
+
+<script type='application/javascript'>
+function populate_form(id, url){
+    project_url = `${url}projects/${id}`;
+
+    $.get(project_url, (response) => {
+        data = response.project
+        // populate edit form        
+        $('#project_id').html(data.id);
+        $('#project_desc').html(data.description);
+        $('#project_backlog').html(data.feature_backlog);
+        $('#project_goals').html(data.stretch_goals);
+        $('#project_mvp').html(data.minimal_version);
+        $('#project_name').html(data.name);
+        
+        // populate roles form
+        $('#assign_roles #project_name').html(data.name);
+        for (let i in data.interested){
+            user = data.interested[i];            
+            $.get(`${url}users/${user}`, (res) => {
+                let user = res.user;
+                let name = $(`<option value="${user.firstname}_${user.lastname}">${user.name}</option>`)
+                $('select').append(name);
+            });
+        }
+
+        $.get(`${url}users/`, (res) => {
+            const users = res.users;
+            for (let i in users) {
+                user = users[i];
+                let form_group = $('<div class="form-group col-6">');
+                let input = $(`<input id="${user.firstname}_${user.lastname}" type="checkbox">`);
+                let label = $(`<label class="ml-1" for="${user.firstname}_${user.lastname}">${user.name}</label>`);
+                form_group.append(input, label);
+                $('[id^="team_list"]').append(form_group);
+            }
+        });
+
+    });
+}
+
+function toggleForm(id){
+    const form_edit = $('#edit_project');
+    const form_roles = $('#assign_roles');
+    if (id.includes('edit')) {
+        form_edit.hide();
+        form_roles.show();
+    } else {
+        form_roles.hide();
+        form_edit.show();
+    }    
+}
+</script>
+{% endif %}
+
+{% endblock %}

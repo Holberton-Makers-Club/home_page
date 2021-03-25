@@ -29,25 +29,37 @@
             <div class="container">
                 <a class="navbar-brand" href="/">
                     <img src="https://storage.googleapis.com/home-page-static-images/makers_text_logo.svg" alt="" height="80px">
-                    </a>
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                     </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto d-flex align-items-end">
+                    {% if data %}
+                        {% if data.current_user %}
                         <li class="nav-item">
-                            {% if data.current_user %}
                             <a class="nav-link" href="{{ url_for('landing.index') }}">Dashboard</a>
-                            {% else %}
-                            <a class="nav-link" href="{{ url_for('landing.index') }}">Our Mission</a>
-                            {% endif %}
                         </li>
+                        {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('landing.projects') }}">Projects</a>
+                                <a class="nav-link" href="{{ url_for('landing.index') }}">Mission</a>
                         </li>
+                        {% endif %}
+
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('landing.users') }}">Members</a>
+                            <a class="nav-link" href="{{ url_for('projects.projects') }}">Gallery</a>
                         </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('users.users') }}">Makers</a>
+                        </li>
+                        {% if data.current_user %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('users.user_profile', id=data.current_user.id) }}">Profile</a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+
                         
                     </ul>
                 </div>
@@ -70,6 +82,10 @@
         
     </p>
     {% block content %}
+
+    {% endblock %}
+
+    {% block projects %}
     {% endblock %}
 
     </main>
@@ -78,11 +94,11 @@
         {% if data %}
         {% if data.current_user %}
         <li class="nav-item">
-            <a class="nav-link text-light" href="{{ url_for('landing.logout') }}">Logout</a>
+            <a class="nav-link text-light" href="{{ url_for('auth.logout') }}">Logout</a>
         </li>
         {% else %}
         <li class="nav-item">
-            <a class="nav-link text-light" href="{{ url_for('landing.login_page') }}">Student Portal</a>
+            <a class="nav-link text-light" href="{{ url_for('auth.login_page') }}">Student Portal</a>
         </li>
         {% endif %}
         {% endif %}

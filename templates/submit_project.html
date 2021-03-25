@@ -1,0 +1,137 @@
+
+{% extends 'base.html' %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+
+
+{% if data.current_user %}
+
+
+
+<section class="container justify-content-center mb-4" id="submit_project">
+    <div class="container">
+            <h1 class="py-4 text-center" id="title">New Proposal</h1>
+    </div>
+    <div class="card col-sm-12 col-md-6 mx-md-auto justify-content-center py-2">
+        <!-- Login Form -->
+        <form name="submit_project" id="submit_project_form" method="POST" action="/projects">
+            <div id="group-1">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Proposal title" required>
+                </div>
+                <div class="form-group">
+                    <label for="call_to_action">Call to Action</label>
+                    <textarea style="resize: none;" rows="5" cols="333" maxlength="333" class="form-control" id="call_to_action" name="call_to_action" placeholder="1-3 sentences about the general idea." required></textarea>
+                </div>
+            </div>
+            <div id="group-2">
+                <div hidden>
+                    <h5>Tech Stack</h5>
+                    <div>?? TODO ?? LIST OF CHECKBOXES</div>
+                    <textarea></textarea>
+                </div>
+                <div class="form-group">
+                    <h5>Sprint 0</h5>
+                    <label for="minimal_version">Minimal version</label>
+                    <textarea style="resize: none;" rows="5" cols="333" maxlength="333"  class="form-control" id="minimal_version" name="minimal_version" placeholder="Most fundamental feature(s). Must be possible to build in one sprint. Example: If proposal is to clone instagram, the sprint 0 version might be one page where any unauthenticated visitor can view and post photos to a feed." required></textarea>
+                </div>
+            </div>
+            <div id="group-3">
+                <div class="form-group">
+                    <label for="stretch_goals">Stretch goals</label>
+                    <textarea style="resize: none;" rows="5" cols="333" maxlength="333"  class="form-control" id="stretch_goals" name="stretch_goals" placeholder="Features that may be possible in the first sprint but are not priorities." required></textarea>
+                </div>
+                <div class="form-group" >
+                    <label for="feature_backlog">Feature Backlog <span class="txt-holb-red">(optional)</span></label>
+                    <textarea style="resize: none;" rows="5" cols="333" maxlength="333" class="form-control" id="feature_backlog" name="feature_backlog" placeholder="Long term vision here."></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row px-3  justify-content-between">
+                    <button type="button" id="btn-prev" onClick="changeGroup(-1)" class="mr-md-1 col-md-3  form-control btn-primary bg-holb-red text-light font-weight-bold">Prev</button>
+                    <button type="button" id="btn-next" onClick="changeGroup(1)" class="ml-md-1 col-md-3  form-control btn-primary bg-holb-red text-light font-weight-bold">Next</button>
+                    <input type="submit" onclick="sub()" value="SUBMIT" class="ml-md-1 col-md-3 form-control btn-primary bg-holb-red text-light font-weight-bold text-center" id="submit-btn">
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <script type="application/javascript">
+        let group = 1;
+
+        function validateInput() {
+            document.activeElement.blur();
+            const inputs = $(`#group-${group}`).find('input');
+            const textAreas = $(`#group-${group}`).find('textarea');
+            
+            for (let i = 0; i < inputs.length; i++) {
+                // console.log(index, )
+                let item = inputs[i];
+                if (!item.required) continue;
+                if (item.value === "") return false;
+            }
+
+            for (let i = 0; i < textAreas.length; i++) {
+                let item = textAreas[i];
+                if (!item.required) continue;
+                if (item.value === "") return false;
+            }
+    
+            return true;
+        }
+
+        function changeGroup(step) {
+
+
+            if (step === 1 && !validateInput()) return;
+
+            group += step;
+            group = (group < 1) ? 1 : group;
+            group = (group > 3) ? 3 : group;
+
+            $('[id^="group-"]').hide();
+            $(`#group-${group}`).show();
+            document.activeElement.blur();
+
+            if (group === 3) {
+                $('#btn-next').hide();
+                $('#submit-btn').show();
+            } else {
+                $('#btn-next').show();
+                $('#submit-btn').hide();
+            }
+
+            console.log(group);
+        }
+
+        $(document).ready(() => {
+            $('#group-2').hide();
+            $('#group-3').hide();
+            $('#submit-btn').hide();
+        });
+
+        let x = false;
+        function sub() {
+            x = true;
+        }
+        window.onbeforeunload = function(e) {
+            if (x) {
+                return
+            }
+            return "Are you sure you want to leave this page incomplete?";
+        };
+    </script>
+</section>
+{% else %}
+must be logged in to view this page
+{% endif %}
+
+
+{% endblock %}

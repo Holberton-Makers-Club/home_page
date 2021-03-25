@@ -8,12 +8,24 @@
 
 <!-- projects section -->
 <section class="container justify-content-center mb-4" id="projects">
-    <div class="container">
+    <div class="container col-6">
+
+<!-- QUOTE -->
+{% if data.quote %}
+    <section class="container col-sm-12 col-md-10  mb-2">
+        <div class=" text-center py-2">
+            <p class="txt-holb-red">{{data.quote.text}}</p>
+            - {{data.quote.author}}
+        </div>
+    </section>
+{% endif %}
+
             <h1 class="py-4 text-center" id="title">Login</h1>
+            The current state of authentication is usable, but not yet entirely secure. Passwords are not yet hashed.<br>Please do not reuse any passwords from other services.
         </div>
     <div class="card col-sm-12 col-md-6 mx-md-auto justify-content-center py-2">
         <!-- Login Form -->
-        <form name="login" id="login_form" method="POST" action="/login">
+        <form name="login" id="login_form" method="POST" action="{{ url_for('auth.login_form_submit') }}">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="john.jones@email.com">
@@ -23,20 +35,17 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="********">
             </div>
             <div class="form-group">
-                <input type="submit" value="LOGIN" class="form-control bg-holb-red text-light font-weight-bold" id="submit-btn">
+                <input type="submit" value="LOGIN" class="form-control btn-primary bg-holb-red text-light font-weight-bold" id="submit-btn">
             </div>
             <a href="#" class="form_link" onclick="displayRegister()">Not a member? Register</a>
         </form>
 
         <!-- Register Form -->
-        <form name="register" id="register_form" method="POST" action="/register">
+        <form name="register" id="register_form" method="POST" action="{{ url_for('auth.register') }}">
+            
             <div class="form-group">
-                <label for="firstname">First Name</label>
-                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Jane">
-            </div>
-            <div class="form-group">
-                <label for="lastname">Last Name</label>
-                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Doe">
+                <label for="name">Full Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Jane Doe">
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
@@ -51,7 +60,11 @@
                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="********">
             </div>
             <div class="form-group">
-                <input type="submit" value="REGISTER" class="form-control bg-holb-red text-light font-weight-bold">
+                <label for="age-verification">I confirm that I am 18 years of age or older.</label>
+                <input type="checkbox" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="REGISTER" class="form-control btn-primary text-light font-weight-bold">
             </div>
             
             <a href="#" class="form_link" onclick="displayLogin()">Already a member? Log In</a>

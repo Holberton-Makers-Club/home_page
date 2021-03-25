@@ -22,6 +22,7 @@ class Base():
 
     @classmethod
     def get_by_class(cls):
+        print(cls)
         return Base.db_client.get_by_class(cls.__name__)
     
     @classmethod

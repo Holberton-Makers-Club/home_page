@@ -2,7 +2,6 @@ from api.v1 import api_v1
 from models.storage.firestore_client import FirestoreClient
 from flask import jsonify, request
 import requests
-from helpers import build_url
 from models.users import User
 
 @api_v1.route('/users', methods=['GET'], strict_slashes=False)
@@ -19,18 +18,23 @@ def create_user():
     if User.get_by_attr('email', email):
         return jsonify({'status': 'error', 'user': ''}), 400
     data = {
-        'firstname': f.get('firstname'),
-        'lastname': f.get('lastname'),
+        'name': f.get('name'),
         'email': email,
         'password': f.get('password')
     }
-    print(data)
     new_user = User(**data)
     new_user.save()
     return jsonify({'status': 'OK', 'user': new_user.to_dict()}), 200
 
-@api_v1.route('/users/<id>', methods=['GET'], strict_slashes=False)
+@api_v1.route('/users/<id>', methods=['GET', 'DELETE'], strict_slashes=False)
 def get_user_by_id(id):
+    from models.auth.session import Session
+    if request.method == 'DELETE':
+        User.delete_by_id(id)
+        if request.cookies.get('session') in Session.sessions:
+            del Session.sessions[request.cookies.get('session')]
+            Session.delete_by_id(request.cookies.get('session'))
+        return jsonify({'status': 'OK', 'message': 'Account deleted.'})
     user = User.get_by_id(id)
     if not user:
         return jsonify({'status': 'error'}), 400
@@ -46,10 +50,8 @@ def update_user_by_id(id):
             }), 400
     f = request.form
     user = User(**user)
-    if f.get('firstname'):
-        user.firstname = f.get('firstname')
-    if f.get('lastname'):
-        user.lastname = f.get('lastname')
+    if f.get('name'):
+        user.name = f.get('name')
     if f.get('title'):
         user.title = f.get('title')
     if f.get('bio'):
