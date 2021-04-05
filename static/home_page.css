@@ -98,3 +98,11 @@ btn-primary:disabled {
 .project-popup::-webkit-scrollbar-thumb {
     background-color: #BE0037;
 }
+
+.bg-light {
+    background-color: rgb(242, 242, 242);
+}
+
+.drop-shadow {
+    filter: drop-shadow(0 0 0.5rem #BE0037);
+}

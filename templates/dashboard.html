@@ -77,12 +77,13 @@
                 <form action="/projects/{{project.id}}" method="POST" name="assign-product-owner">
                     
                     <div class="form-group">
-                        <select name="owner" id="owner">
+                        <select class="w-100" name="owner" id="owner">
                             {% for user in data.users %}
-                            <option>{{user.name}}:{{user.id}}
+                            <option>
                                 {% if user.staff %}
-                                - staff
+                                <p>Staff -</p>
                                 {% endif %}
+                                {{user.name}} : {{user.id}}
                             </option>
                             {% endfor %}
                         </select>
@@ -98,206 +99,83 @@
                 
                 </div>
             {% endif %}
-                    
 
-
-            <a class="" href="{{ url_for('projects.submit_project_page') }}">
-                <button href="{{ url_for('projects.submit_project_page') }}" type="submit" class="font-weight-bold text-light btn bg-dark mb-4">NEW PROPOSAL</button>
-            </a>
-
-            
-            <!-- search bar -->
-            <div class="mx-auto col-12 my-2 py-0" style="padding-left:0!important; padding-right:0!important;">
-                <form class="form-inline" action="/projects/search" method="POST">
-                    <label class="sr-only" for="searchBar">Search by proposal name</label>
-                    <input type="text" class="form-control mb-2 col mr-md-2" id="searchBar" name="searchBar" placeholder="Enter Search">
-                    <button type="submit" class="btn btn-primary mb-2 col-12 col-md-2">Search</button>
-                </form>
-            </div>
 
             {% if msg %}
             <span class="btn-alert">{{ msg }}</span>
             {% endif %}
-            
 
-            {% if data.projects %}
-        
-            {% for project in data.projects %}
-
-                <div class="card mt-4 p-2">
-                    <div class="d-flex justify-content-between">
+            {% for i in range(10) %}
+            <div class="card p-2 my-5 drop-shadow">
+                <div class="mx-3 m-2 text-muted">
+                    <div class="d-flex justify-content-between align-items-center">
                         <header  class="mb-2">
-                            <a class="" href="{{ project.link }}"><h3 class="card-title mb-0">{{ project.name }}</h3></a>
-                            Willing participants: {{project.participant_count}}
+                            <a href="/"><h3 class="txt-holb-red card-title mb-0">Instagram Clone</h3></a>
                         </header>
-                        
-                        
-                        
-                        <span id="edit_{{project.id}}" onClick='displayPopup("{{project.id}}")' class="text-right">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                            </svg>
-                        </span>
+                        <p class="">Sprints: 0</p>
                     </div>
                     
-                    <h5>Call to Action</h5>
                     <p class="card-text text-wrap">
-                        {% if project.call_to_action %}
-                        {{ project.call_to_action }}
-                        
-                        {% endif %}
+                        Let's clone the desktop version of Instagram! Users sign in to view and post photos. They comment, like, share, and tag those photos. They can also direct message one another, and more!
                     </p>
-                    <details>
-                        <summary class="my-2">See more</summary>
-
-                        {% if project.minimal_version %}
-                        <h5 class="txt-holb-red">Minimal version:</h5>
-                        <p class="card-text text-wrap font-weight-bold">
-                            {{ project.minimal_version }}
-                        </p>
-                        {% endif%}
-
-                        {% if project.stretch_goals %}
-                        <h5>Stretch goals:</h5>
-                        <p class="card-text text-wrap">
-                            {{ project.stretch_goals }}
-                        </p>
-                        {% endif%}
-
+                    <div class="d-flex justify-content-between">
+                        <h4 class="text-dark">Sprint #0</h4>
+                        <span>slider</span>
+                    </div>                    
+                    <div class="bg-light rounded p-2">
+                        <div>
+                            <h5>Overview</h5>
+                            <p>In this sprint we'll produce and deploy a minimal one page site where all visirots can post photos and view those posted by others. Visitors will not yet have profiles or be required to log in.</p>
+                        </div>
                         <details>
-                            <summary>Feature backlog</summary>
-                            {% if project.feature_backlog %}
-                            <p class="card-text text-wrap">
-                                {{ project.feature_backlog }}
-                            </p>
-                            {% endif%}
+                            <summary class="mt-2 text-primary">see more</summary>
+
+                            <div>
+                                <h5>Acceptance Criteria</h5>
+                                <ul class="p-0">
+                                    <li>1. A webpage is deployed</li>
+                                    <li>2. Visitors of the page can add photos</li>
+                                    <li>3. Visitors can view the photos added by others</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h5> Stretch Goals</h5>
+                                <ul class="p-0">
+                                    <li>1. Visitors can leave comments of photos</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5>Time Estimate Breakdown</h5>
+                                    <h5>7 Hours Total</h5>
+                                </div>
+                                <ul class="p-0">
+                                    <li class="d-flex"><span class="mr-1">1.0</span><p class="text-left mb-0">Documentation</p></li>
+                                    <li class="d-flex"><span class="mr-1">1.0</span> <p class="text-left mb-0">Deployment/Environment</p></li>
+                                    <li class="d-flex"><span class="mr-1">0.25</span> <p class="text-left mb-0">Frontend Design</p></li>
+                                    <li class="d-flex"><span class="mr-1">1.5</span> <p class="text-left mb-0">Frontend UX</p></li>
+                                    <li class="d-flex"><span class="mr-1">0.25</span> <p class="text-left mb-0">Frontend UI</p></li>
+                                    <li class="d-flex"><span class="mr-1">1.0</span> <p class="text-left mb-0">Backend Routes</p></li>
+                                    <li class="d-flex"><span class="mr-1">1.0</span> <p class="text-left mb-0">Backend API</p></li>
+                                    <li class="d-flex"><span class="mr-1">2.0</span> <p class="text-left mb-0">Backend Models</p></li>
+                                </ul>
+                            </div>
+
                         </details>
-
-                        
-
-                    </details>
-
-                        {% if data.load_buttons %}
-                        {% if current_user.id in project.interested %}
-                        <!--remove interest form here-->
-                        <form class="mt-4" action="{{ url_for('dash.revoke_interest', project_id=project.id) }}" name="revoke-interest-form" id="revoke-interest{{project.id}}" method="POST">
-                            <div class="form-group">
-                                <input type="submit" name="revoke-interested" value="revoke interest" class="btn-primary btn">
-                            </div>
-                        </form>
-
-                        {% else %}
-
-                        <form class="mt-4" action="{{ url_for('dash.express_interest', project_id=project.id) }}" name="express-interest-form" id="express-interest{{project.id}}" method="POST">
-                            <div class="form-group">
-                                <input type="submit" name="express-interest" value="express interest" class="interested btn-dark btn">
-                            </div>
-                        </form>
-                        {% endif %}
-                        {% endif %}
-
-                    <div id=project_popup_{{project.id}} onblur="hideElement(this)" style="display: none;" class="project-popup border rounded pl-2" tabindex="0">
-                        <ul class="text-right mr-2 p-0">
-                            <li>
-                                <a href="{{ url_for('projects.assign_roles') }}">Assign Roles</a>
-                            </li>
-                            <li>
-                                <a href=" ">Edit</a>
-                            </li>  
-                            <li>
-                                <a href=" ">Report</a>
-                            </li>                           
-                        </ul>
                     </div>
-
-            </div>
-
-                
-                    <!--
-                        onclick="hideInterestForm('interest-fields-{{project.id}}')"
-                        onclick="showInterestForm('interest-fields-{{project.id}}')"
-                    <div class="form-group" id="interest-{{project.id}}">
-                        <div class="form-group">
-                            <select disabled class="form-control interest-fields-{{project.id}} mb-2">
-                                <option selected>Navigator</option>
-                                <option>Driver</option>
-                                <option>Owner</option>
-                                <option>Client</option>
-                                <option>Coach</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select disabled class="form-control interest-fields-{{project.id}}">
-                                <option selected>Backend</option>
-                                <option>Frontend</option>
-                                <option>SysAdmin</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input class="btn btn-primary interest-fields-{{project.id}}" disabled type="submit" name="submit-interest-{{project.id}}" id="submit-interest-{{project.id}}">
-                        </div>
-                    </div>
-                    -->
-
-                <hr class="my-4">
-            {% endfor %}
+                    
                 </div>
+            </div>
+            {% endfor %}
 
-            {% endif %}
-
-
+        </div>
     </section>
 
 <script type="application/javascript">
-    function displayPopup(strID) {
-        const element = $(`#project_popup_${strID}`);        
-        element.show();
-        element.focus();
-    }
-
-    function hideElement(element) {
-        setTimeout(() => {
-            $(`#${element.id}`).hide();
-        }, 50);        
-    }
-
-    $()
 
 </script>
-    
-<!--
-<script>
-
-window.onload = function doSomething(){
-    let interestFields = document.getElementsByClassName("interest-fields");
-    console.log(interestFields)
-    for (var i = 0; i < interestFields.length; i++) {
-        interestFields[i].disabled = false;
-    }
-}
-doSomething();
-
-function showInterestForm(className) {
-    let fields = document.getElementsByClassName(className);
-    for (var i = 0; i < fields.length; i++) {
-        fields[i].disabled = false;
-    }
-}
-function hideInterestForm(className) {
-    let fields = document.getElementsByClassName(className);
-    for (var i = 0; i < fields.length; i++) {
-        fields[i].disabled = true;
-    }
-}
-
-</script>
--->
-        
-
-
-
-
-
 
 {% endif %}
 
