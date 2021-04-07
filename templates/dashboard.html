@@ -17,87 +17,95 @@
 
 <!-- projects section -->    
     <section class="container  justify-content-center mb-4"  id="projects">
-        <div class="container">
-        <h1 class="py-4 text-center" id="title">Dashboard</h1>
+        <div class="col-lg-10 mx-auto text-center">
+            <h1 class="py-4 text-center" id="title">Dashboard</h1>
+            <details>
+                <summary class="text-primary">Read Me</summary>
+                <p>pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text pH Text</p>                
+            </details>
         </div>
-        <div class="col-sm-12 col-md-6 mx-md-auto justify-content-center ">
+        <div class="">
 
             {% if data.current_project %}
             {% set project = data.current_project %}
             
-            <h3 class="txt-holb-red my-0">Current Project</h3>
-            <div class="card mb-4 p-2 bg-holb-red text-light">
-                <a href="{{ project.link }}"><h3 class="card-title text-light">{{ project.name }}</h3></a>
-                Contributors: {% for contributor in project.contributors %}{{contributor.name}}{% endfor %}
-                <h5>Call to Action</h5>
-                <p class="card-text text-wrap">
-                    {% if project.call_to_action %}
-                    {{ project.call_to_action }}
-                    
-                    {% endif %}
-                </p>
-                <details>
-                    <summary class="my-2">See more</summary>
-
-                    {% if project.minimal_version %}
-                    <h5 >Minimal version:</h5>
-                    <p class="card-text text-wrap font-weight-bold">
-                        {{ project.minimal_version }}
-                    </p>
-                    {% endif%}
-
-                    {% if project.stretch_goals %}
-                    <h5>Stretch goals:</h5>
-                    <p class="card-text text-wrap">
-                        {{ project.stretch_goals }}
-                    </p>
-                    {% endif%}
-
-                    <details>
-                    <summary class="my-2">See more</summary>
-                    {% if project.feature_backlog %}
-                    <h5>Feature backlog:</h5>
-                    <p class="card-text text-wrap">
-                        {{ project.feature_backlog }}
-                    </p>
-                    {% endif%}
-                    test here
-                    </details>
-
-
-                </details>
-                <h3>Product owner</h3>
-                <h5>
-                    {% if project.owner_name %}
-                        {{ project.owner_name }}
-                    {% endif %}
-                </h5>
-
-                {% if current_user.staff %}
-                <form action="/projects/{{project.id}}" method="POST" name="assign-product-owner">
-                    
-                    <div class="form-group">
-                        <select class="w-100" name="owner" id="owner">
-                            {% for user in data.users %}
-                            <option>
-                                {% if user.staff %}
-                                <p>Staff -</p>
-                                {% endif %}
-                                {{user.name}} : {{user.id}}
-                            </option>
-                            {% endfor %}
-                        </select>
-                        <input type="submit" class="btn-secondary">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <h3 class="txt-holb-red my-0">Current Project</h3>
+                    <div class="card mb-4 p-2 bg-holb-red text-light">
+                        <a href="{{ project.link }}"><h3 class="card-title text-light">{{ project.name }}</h3></a>
+                        Contributors: {% for contributor in project.contributors %}{{contributor.name}}{% endfor %}
+                        <h5>Call to Action</h5>
+                        <p class="card-text text-wrap">
+                            {% if project.call_to_action %}
+                            {{ project.call_to_action }}
+                            
+                            {% endif %}
+                        </p>
+                        <details>
+                            <summary class="my-2">See more</summary>
+        
+                            {% if project.minimal_version %}
+                            <h5 >Minimal version:</h5>
+                            <p class="card-text text-wrap font-weight-bold">
+                                {{ project.minimal_version }}
+                            </p>
+                            {% endif%}
+        
+                            {% if project.stretch_goals %}
+                            <h5>Stretch goals:</h5>
+                            <p class="card-text text-wrap">
+                                {{ project.stretch_goals }}
+                            </p>
+                            {% endif%}
+        
+                            <details>
+                            <summary class="my-2">See more</summary>
+                            {% if project.feature_backlog %}
+                            <h5>Feature backlog:</h5>
+                            <p class="card-text text-wrap">
+                                {{ project.feature_backlog }}
+                            </p>
+                            {% endif%}
+                            test here
+                            </details>
+        
+        
+                        </details>
+                        <h3>Product owner</h3>
+                        <h5>
+                            {% if project.owner_name %}
+                                {{ project.owner_name }}
+                            {% endif %}
+                        </h5>
+        
+                        {% if current_user.staff %}
+                        <form action="/projects/{{project.id}}" method="POST" name="assign-product-owner">
+                            
+                            <div class="form-group">
+                                <select class="w-100" name="owner" id="owner">
+                                    {% for user in data.users %}
+                                    <option>
+                                        {% if user.staff %}
+                                        <p>Staff -</p>
+                                        {% endif %}
+                                        {{user.name}} : {{user.id}}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <input type="submit" class="btn-secondary">
+                            </div>
+                        </form>
+                        {% endif %}
+        
+                        <h3>Google meet room </h3>
+                        <a class="text-warning text-decoration-underlined" href="https://meet.google.com/dyx-xibr-fvy" target="_blank">
+                            https://meet.google.com/dyx-xibr-fvy
+                        </a>
+                        
                     </div>
-                </form>
-                {% endif %}
-
-                <h3>Google meet room </h3>
-                <a class="text-warning text-decoration-underlined" href="https://meet.google.com/dyx-xibr-fvy" target="_blank">
-                    https://meet.google.com/dyx-xibr-fvy
-                </a>
-                
                 </div>
+            </div>
             {% endif %}
 
 
@@ -105,76 +113,109 @@
             <span class="btn-alert">{{ msg }}</span>
             {% endif %}
 
-            {% for i in range(10) %}
-            <div class="card p-2 my-5 drop-shadow">
-                <div class="mx-3 m-2 text-muted">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <header  class="mb-2">
-                            <a href="/"><h3 class="txt-holb-red card-title mb-0">Instagram Clone</h3></a>
-                        </header>
-                        <p class="">Sprints: 0</p>
-                    </div>
-                    
-                    <p class="card-text text-wrap">
-                        Let's clone the desktop version of Instagram! Users sign in to view and post photos. They comment, like, share, and tag those photos. They can also direct message one another, and more!
-                    </p>
-                    <div class="d-flex justify-content-between">
-                        <h4 class="text-dark">Sprint #0</h4>
-                        <span>slider</span>
-                    </div>                    
-                    <div class="bg-light rounded p-2">
-                        <div>
-                            <h5>Overview</h5>
-                            <p>In this sprint we'll produce and deploy a minimal one page site where all visirots can post photos and view those posted by others. Visitors will not yet have profiles or be required to log in.</p>
-                        </div>
-                        <details>
-                            <summary class="mt-2 text-primary">see more</summary>
-
-                            <div>
-                                <h5>Acceptance Criteria</h5>
-                                <ul class="p-0">
-                                    <li>1. A webpage is deployed</li>
-                                    <li>2. Visitors of the page can add photos</li>
-                                    <li>3. Visitors can view the photos added by others</li>
-                                </ul>
+            <div class="row">
+                {% for i in range(10) %}
+                <div class="col-12 col-lg-6">
+                    <div class="card p-2 my-4 mx-2 drop-shadow-red">
+                        <div class="mx-3 m-2 text-muted">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <header  class="mb-2">
+                                    <a href="/"><h3 class="txt-holb-red card-title mb-0">Instagram Clone</h3></a>
+                                </header>
+                                <p class="">Sprints: 0</p>
                             </div>
                             
-                            <div>
-                                <h5> Stretch Goals</h5>
-                                <ul class="p-0">
-                                    <li>1. Visitors can leave comments of photos</li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5>Time Estimate Breakdown</h5>
-                                    <h5>7 Hours Total</h5>
+                            <p class="card-text text-wrap">
+                                Let's clone the desktop version of Instagram! Users sign in to view and post photos. They comment, like, share, and tag those photos. They can also direct message one another, and more!
+                            </p>
+                            <div class="d-flex justify-content-between">
+                                <h4 class="text-dark">Sprint #0</h4>
+                                <input type="checkbox" id="interest-toggle_{{ i }}">
+                                <label for="interest-toggle_{{ i }}" class="switch">
+                                    <span onclick="changeInterest(this.id)" class="toggle" id="toggle_{{ i }}"></span>
+                                </label>
+                            </div>                    
+                            <div class="bg-light rounded p-2">
+                                <div>
+                                    <h5>Overview</h5>
+                                    <p>In this sprint we'll produce and deploy a minimal one page site where all visirots can post photos and view those posted by others. Visitors will not yet have profiles or be required to log in.</p>
                                 </div>
-                                <ul class="p-0">
-                                    <li class="d-flex"><span class="mr-1">1.0</span><p class="text-left mb-0">Documentation</p></li>
-                                    <li class="d-flex"><span class="mr-1">1.0</span> <p class="text-left mb-0">Deployment/Environment</p></li>
-                                    <li class="d-flex"><span class="mr-1">0.25</span> <p class="text-left mb-0">Frontend Design</p></li>
-                                    <li class="d-flex"><span class="mr-1">1.5</span> <p class="text-left mb-0">Frontend UX</p></li>
-                                    <li class="d-flex"><span class="mr-1">0.25</span> <p class="text-left mb-0">Frontend UI</p></li>
-                                    <li class="d-flex"><span class="mr-1">1.0</span> <p class="text-left mb-0">Backend Routes</p></li>
-                                    <li class="d-flex"><span class="mr-1">1.0</span> <p class="text-left mb-0">Backend API</p></li>
-                                    <li class="d-flex"><span class="mr-1">2.0</span> <p class="text-left mb-0">Backend Models</p></li>
-                                </ul>
+                                <details>
+                                    <summary class="mt-2 text-primary">current sprint</summary>
+
+                                    <div>
+                                        <h5>Acceptance Criteria</h5>
+                                        <ul class="p-0">
+                                            <li>1. A webpage is deployed</li>
+                                            <li>2. Visitors of the page can add photos</li>
+                                            <li>3. Visitors can view the photos added by others</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div>
+                                        <h5> Stretch Goals</h5>
+                                        <ul class="p-0">
+                                            <li>1. Visitors can leave comments of photos</li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5>Time Estimate Breakdown</h5>
+                                            <h5>7 Hours Total</h5>
+                                        </div>
+                                        <ul class="p-0">
+                                            <li class="d-flex"><span class="mr-1">1.0</span><p class="text-left mb-0">Documentation</p></li>
+                                            <li class="d-flex"><span class="mr-1">1.0</span> <p class="text-left mb-0">Deployment/Environment</p></li>
+                                            <li class="d-flex"><span class="mr-1">0.25</span> <p class="text-left mb-0">Frontend Design</p></li>
+                                            <li class="d-flex"><span class="mr-1">1.5</span> <p class="text-left mb-0">Frontend UX</p></li>
+                                            <li class="d-flex"><span class="mr-1">0.25</span> <p class="text-left mb-0">Frontend UI</p></li>
+                                            <li class="d-flex"><span class="mr-1">1.0</span> <p class="text-left mb-0">Backend Routes</p></li>
+                                            <li class="d-flex"><span class="mr-1">1.0</span> <p class="text-left mb-0">Backend API</p></li>
+                                            <li class="d-flex"><span class="mr-1">2.0</span> <p class="text-left mb-0">Backend Models</p></li>
+                                        </ul>
+                                    </div>
+                                </details>
+                                <details>
+                                    <summary>
+                                        previous sprints
+                                    </summary>
+                                </details>
                             </div>
 
-                        </details>
+                        </div>
                     </div>
-                    
                 </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
 
+            </div>
+            
         </div>
     </section>
 
 <script type="application/javascript">
+    function changeInterest(id) {
+        const element = $(`#${id}`);
+        const parents = element.parents();
+        let card;
 
+        for (const i in parents) {
+            const name = parents[i].className;
+            if (name.includes('card')) {
+                card = parents[i];
+                break;
+            }
+        }
+
+        let s2;
+        if (card.className.includes('red')) {
+            s2 = card.className.replace('red', 'blue');
+        } else {
+            s2 = card.className.replace('blue', 'red'); 
+        }
+
+        card.className = s2;
+    }    
 </script>
 
 {% endif %}

@@ -1,3 +1,9 @@
+:root {
+    --red: #BE0037;
+    --blue: #007bff;
+    --bg-toggle: #ccc;
+}
+
 
 .btn-primary {
     background-color: #be0037;
@@ -103,6 +109,51 @@ btn-primary:disabled {
     background-color: rgb(242, 242, 242);
 }
 
-.drop-shadow {
-    filter: drop-shadow(0 0 0.5rem #BE0037);
+.drop-shadow-red {
+    filter: drop-shadow(0 0 0.5rem var(--red));        
 }
+
+.drop-shadow-blue {
+    filter: drop-shadow(0 0 0.5rem var(--blue));
+}
+
+/* toggle switch for expressing interest */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.toggle {
+    position: absolute;
+    cursor: pointer;
+    height: 2rem;
+    width: 3rem;
+    border-radius: 1.5rem;
+    background-color: var(--red);
+}
+
+.toggle::before {
+    position: absolute;
+    content: "";
+    top: 0.25rem;
+    left: 0.25rem;
+    border-radius: 1.5rem;   
+    height: 1.5rem;
+    width: 1.5rem;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+input:checked + .switch .toggle::before {
+    left: 1.25rem;    
+}
+
+input:checked + .switch .toggle {
+    background-color: var(--blue)
+}
+
+/* end */
