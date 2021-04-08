@@ -9,11 +9,11 @@ project_routes = Blueprint("projects", __name__, url_prefix="/projects")
 
 
 
-@project_routes.route('/submit_project', methods=['GET'], strict_slashes=False)
+@project_routes.route('/submit_proposal', methods=['GET'], strict_slashes=False)
 @fully_private_route
 def submit_project_page():
     data, current_user = set_data_and_current_user()
-    return render_template('submit_project.html', data=data)
+    return render_template('submit_proposal.html', data=data)
 
 
 @project_routes.route('/', methods=['POST'], strict_slashes=False)
