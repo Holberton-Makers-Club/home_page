@@ -1,0 +1,220 @@
+
+{% extends 'base.html' %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+
+
+{% if data.current_user %}
+
+
+
+<section class="container justify-content-center mb-5" id="submit_project">
+    <div class="container">
+            <h1 class="py-4 text-center" id="title">Project Proposal</h1>
+    </div>
+    <div class="card col-sm-12 col-md-6 mx-md-auto justify-content-center py-2">
+
+        <!-- Initial Conformation -->
+            <div class="mb-3" id="group-0">
+                <p>
+                    Please confirm you have reviewed the following resources prior to submitting a new proposal.
+                </p>
+            
+                <input type="checkbox" id="guidelines" required>
+                <a class="text-primary" target="_blank" href="https://docs.google.com/presentation/d/1dtKy1g_v0WEiuMnDJEVjcX5Ocjb5oiVaPshglABIe0c/edit?usp=sharing">
+                    <u>Proposal Guidelines</u>
+                </a>
+                <br>
+                <input type="checkbox" id="outline" required>
+                <a class="text-primary" href="https://docs.google.com/presentation/d/1RBX3wGb7PFI-fAU4qBpyRiSZW0_JMIkCDuAvErAdNb8/edit?usp=sharing">
+                    <u>Sprint Outline</u>
+                </a>
+
+            </div>
+        
+        <!-- Login Form -->
+        <form name="submit_project" id="submit_project_form" method="POST" action="/projects">
+
+            <div id="group-1">
+                <div class="form-group">
+                    <label for="name">Title</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Proposal Title" required>
+                </div>
+                <div>
+                    <p>This will be the first thing other Makers read. It should be succinct and capitalized. Others should understand the basic idea just by reading the title.</p>
+                </div>
+                <p>Examples:</p>
+                <div class="container">
+                    <div class="row">
+                        <span class="mr-2">X</span><p class="m-0 p-0"><span class="text-danger">Let's build an i</span>nstagram <span class="text-danger">c</span>lone</p>
+                    </div>
+                    <div class="row">
+                        <span class="mr-2">V</span><p class="text-success">Instagram Clone</p>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <span class="mr-2">X</span><p class="m-0 p-0"><span class="text-danger">A</span> Simpl<span class="text-danger">eB</span>log<span class="text-danger">, just posting and up/down votes</span></p>
+                    </div>
+                    <div class="row">
+                        <span class="mr-2">V</span><p class="text-success">Simple Blog</p>
+                    </div>
+                </div>                
+            </div>
+
+            <div id="group-2">
+                <div class="form-group">
+                    <label for="minimal_version">Elevator Pitch</label>
+                    <textarea style="resize: none; height: 10rem" rows="5" cols="333" maxlength="333"  class="form-control" id="minimal_version" name="minimal_version" required></textarea>
+                </div>
+                <p>
+                    This should be a brief description of the project. Explain the ultimate vision in terms of how users will interact with it.
+                    </br>
+                    Describe the <b>what</b>, not the <b>how</b>.
+                </p>
+                <p>Examples:</p>
+                <div class="container">
+                    <div class="row align-items-center mb-3">
+                        <span class="text-center p-0 m-0 mr-2 col-1">X</span>
+                        <p class="col text-danger p-0 m-0">
+                            ***** HEY READ ME!! ***** </br>
+                            My idea is to make a clone of instagram and we should start with augmented reality stories. I have a friend who studies AR and I already started coding the frontend. I also think we should follow SCRUM.
+                        </p>
+                    </div>
+                    <div class="row align-items-center mb-5">
+                        <span class="text-center p-0 m-0 mr-2 col-1">V</span>
+                        <p class="col text-success p-0 m-0">
+                           Let's clone the desktop version of Instagram!
+                           Users sign in to view and post photos. They
+                           comment, linke, share, and tag those photos.
+                           They could also direct message one another,
+                           and more!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="group-3">
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea style="resize: none; height: 20rem" rows="5" cols="333" maxlength="333"  class="form-control" id="description" name="description" required></textarea>                    
+                </div>
+                <p>
+                    <b>Include any other information about your proposal here.</b><p> This is your chance to get the idea fully fleshed out for coaches to review. Be as detailed as you'd like.</p>
+                </p>
+                <p>A coach will:</p>
+                <ul class="pl-2">
+                    <li style="list-style: inside;">determine if your proposal is eligible</li>
+                    <li style="list-style: inside;">draft a realistic acceptance criteria for sprint #0</li>
+                    <li style="list-style: inside;">estimate hours and teams for sprint #0</li>
+                </ul>
+                <p>A coach may:</p>
+                <ul class="pl-2">
+                    <li style="list-style: inside;">reach out to you for clarification</li>
+                    <li style="list-style: inside;">modify the project</li>
+                </ul>
+                <div class="form-group my-5">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <input class="col-1" type="checkbox" id="desc_agree" required>
+                            <p class="col m-0">
+                                <b>I fully understand, agree to and have followed the <span class="text-danger"><a>project proposal guidlines</a></span></b>
+                            </p>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+
+            <div class="form-group">
+                <div class="row px-3  justify-content-between">
+                    <button type="button" id="btn-next" onClick="changeGroup(1)" class="form-control btn-primary bg-holb-red text-light font-weight-bold">CONFIRM</button>
+                    <input type="submit" onclick="sub()" value="SUBMIT" class="form-control btn-primary bg-holb-red text-light font-weight-bold text-center" id="submit-btn">
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <script type="application/javascript">
+        let group = 0;
+
+        function validateInput() {
+            document.activeElement.blur();
+            const inputs = $(`#group-${group}`).find('input');
+            const textAreas = $(`#group-${group}`).find('textarea');
+            
+            for (let i = 0; i < inputs.length; i++) {
+                // console.log(index, )
+                let item = inputs[i];
+                if (!item.required) continue;
+                if (item.type === "checkbox") {
+                    if (item.checked) continue;
+                    else return false;                    
+                } 
+                if (item.value === "") return false;
+            }
+
+            for (let i = 0; i < textAreas.length; i++) {
+                let item = textAreas[i];
+                if (!item.required) continue;
+                if (item.value === "") return false;
+            }
+    
+            return true;
+        }
+
+        function changeGroup(step) {
+
+
+            if (step === 1 && !validateInput()) return;
+
+            group += step;
+            group = (group < 1) ? 1 : group;
+            group = (group > 3) ? 3 : group;
+
+            $('[id^="group-"]').hide();
+            $(`#group-${group}`).show();
+            document.activeElement.blur();
+            $('#btn-next').html('NEXT');
+
+            if (group === 3) {
+                $('#btn-next').hide();
+                $('#submit-btn').show();
+            } else {
+                $('#btn-next').show();
+                $('#submit-btn').hide();
+            }
+
+            console.log(group);
+        }
+
+        $(document).ready(() => {
+            $('#group-1').hide();
+            $('#group-2').hide();
+            $('#group-3').hide();
+            $('#submit-btn').hide();
+        });
+
+        let x = false;
+        function sub() {
+            x = true;
+        }
+        window.onbeforeunload = function(e) {
+            if (x) {
+                return
+            }
+            return "Are you sure you want to leave this page incomplete?";
+        };
+    </script>
+</section>
+{% else %}
+must be logged in to view this page
+{% endif %}
+
+
+{% endblock %}
